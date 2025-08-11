@@ -50,7 +50,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.mmk.shared"
+    namespace = "com.nutrisport.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
