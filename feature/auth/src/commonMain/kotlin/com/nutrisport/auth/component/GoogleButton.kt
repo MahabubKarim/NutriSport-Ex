@@ -1,15 +1,12 @@
 package com.nutrisport.auth.component
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,8 +30,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.nutrisport.shared.BorderIdle
 import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.Gray
-import com.nutrisport.shared.GrayDarker
 import com.nutrisport.shared.IconSecondary
 import com.nutrisport.shared.Resources
 import com.nutrisport.shared.SurfaceLighter
@@ -49,11 +44,11 @@ fun GoogleButton(
     primaryText: String = "Sign in with Google",
     secondaryText: String = "Please wait...",
     icon: DrawableResource = Resources.Image.GoogleLogo,
-    shape: Shape = RoundedCornerShape(99.dp),
+    shape: Shape = RoundedCornerShape(size = 99.dp),
     backgroundColor: Color = SurfaceLighter,
     borderColor: Color = BorderIdle,
     progressIndicatorColor: Color = IconSecondary,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     var buttonText by remember { mutableStateOf(primaryText) }
 
@@ -76,29 +71,26 @@ fun GoogleButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(all = 20.dp)
-                .animateContentSize(
-                    animationSpec = tween(durationMillis = 200)
-                ),
+                .animateContentSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            AnimatedVisibility(
-                visible = !loading
-            ) {
-                Icon(
-                    painter = painterResource(icon),
-                    contentDescription = "Google Logo",
-                    tint = Color.Unspecified
-                )
-            }
-            AnimatedVisibility(
-                visible = loading
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.dp,
-                    color = progressIndicatorColor
-                )
+            AnimatedContent(
+                targetState = loading
+            ) { loadingState ->
+                if (!loadingState) {
+                    Icon(
+                        painter = painterResource(icon),
+                        contentDescription = "Google Logo",
+                        tint = Color.Unspecified
+                    )
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp,
+                        color = progressIndicatorColor
+                    )
+                }
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
