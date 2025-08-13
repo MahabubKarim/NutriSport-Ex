@@ -34,6 +34,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.splash.screen)
+            implementation(libs.firebase.common.ktx)
+            implementation(libs.firebase.auth)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -47,6 +49,9 @@ kotlin {
 
             implementation(libs.auth.kmp)
             implementation(libs.auth.firebase.kmp)
+
+            implementation("dev.gitlive:firebase-common:2.1.0")
+            implementation("dev.gitlive:firebase-auth:2.1.0")
 
             implementation(project(":navigation"))
             implementation(project(":shared"))
