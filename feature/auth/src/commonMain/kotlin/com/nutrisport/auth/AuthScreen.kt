@@ -24,8 +24,11 @@ import com.nutrisport.shared.Alpha
 import com.nutrisport.shared.BebasNeueFont
 import com.nutrisport.shared.FontSize
 import com.nutrisport.shared.Surface
+import com.nutrisport.shared.SurfaceBrand
+import com.nutrisport.shared.SurfaceError
 import com.nutrisport.shared.TextPrimary
 import com.nutrisport.shared.TextSecondary
+import com.nutrisport.shared.TextWhite
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import rememberMessageBarState
@@ -38,13 +41,17 @@ fun AuthScreen() {
     Scaffold { padding ->
         ContentWithMessageBar(
             contentBackgroundColor = Surface,
-            modifier = Modifier
-                .padding(
+            modifier = Modifier.padding(
                     top = padding.calculateTopPadding(),
                     bottom = padding.calculateBottomPadding()
                 ),
             messageBarState = messageBarState,
-            errorMaxLines = 2
+            errorMaxLines = 2,
+            successContainerColor = SurfaceBrand,
+            successContentColor = TextWhite,
+            errorContainerColor = SurfaceError,
+            errorContentColor = TextPrimary,
+            position = MessageBarPosition.BOTTOM
         ) {
             Column(
                 modifier = Modifier
@@ -83,9 +90,11 @@ fun AuthScreen() {
                         }.onFailure { error ->
                             if (error.message?.contains("A network error") == true) {
                                 messageBarState.addError("Internet connection unavailable.")
-                            } else if (error.message?.contains("Idtoken is null") == true) {
+                            }
+                            else if (error.message?.contains("Idtoken is null") == true) {
                                 messageBarState.addError("Sign in canceled.")
-                            } else {
+                            }
+                            else {
                                 messageBarState.addError(error.message ?: "Unknown")
                             }
                             loadingState = false

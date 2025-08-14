@@ -8,11 +8,13 @@ import nutrisport.shared.generated.resources.bebas_neue_regular
 import nutrisport.shared.generated.resources.roboto_condensed_medium
 import org.jetbrains.compose.resources.Font
 
+@Suppress("ComposableNaming")
 @Composable
 fun BebasNeueFont() = FontFamily(
     Font(Res.font.bebas_neue_regular)
 )
 
+@Suppress("ComposableNaming")
 @Composable
 fun RobotoCondensedFont() = FontFamily(
     Font(Res.font.roboto_condensed_medium)
