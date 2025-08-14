@@ -34,6 +34,9 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.splash.screen)
+            // To pass that android context to our koin module
+            // to initializing the Koin library on android
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -50,6 +53,7 @@ kotlin {
 
             implementation(project(":navigation"))
             implementation(project(":shared"))
+            implementation(project(":di"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
