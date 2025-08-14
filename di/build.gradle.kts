@@ -22,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "auth"
+            baseName = "di"
             isStatic = true
         }
     }
@@ -37,13 +37,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-
-            implementation(libs.messagebar.kmp)
-
-            implementation(libs.auth.kmp)
-            implementation(libs.auth.firebase.kmp)
-
-            implementation(project(":shared"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -52,7 +45,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nutrisport.auth"
+    namespace = "com.nutrisport.di"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
