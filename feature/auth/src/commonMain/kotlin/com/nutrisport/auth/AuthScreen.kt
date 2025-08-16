@@ -1,6 +1,7 @@
 package com.nutrisport.auth
 
 import ContentWithMessageBar
+import MessageBarPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,12 +30,12 @@ import com.nutrisport.shared.SurfaceError
 import com.nutrisport.shared.TextPrimary
 import com.nutrisport.shared.TextSecondary
 import com.nutrisport.shared.TextWhite
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
 
 @Composable
 fun AuthScreen() {
+    val viewModel = koinViewModel<AuthViewModel>()
     val messageBarState = rememberMessageBarState()
     var loadingState by remember { mutableStateOf(false) }
 
@@ -42,9 +43,9 @@ fun AuthScreen() {
         ContentWithMessageBar(
             contentBackgroundColor = Surface,
             modifier = Modifier.padding(
-                    top = padding.calculateTopPadding(),
-                    bottom = padding.calculateBottomPadding()
-                ),
+                top = padding.calculateTopPadding(),
+                bottom = padding.calculateBottomPadding()
+            ),
             messageBarState = messageBarState,
             errorMaxLines = 2,
             successContainerColor = SurfaceBrand,
@@ -85,16 +86,21 @@ fun AuthScreen() {
                     linkAccount = false,
                     onResult = { result ->
                         result.onSuccess { user ->
-                            messageBarState.addSuccess("Authentication successful!")
+                            viewModel.createCustomer(
+                                user = user,
+                                onSuccess = {
+                                    messageBarState.addSuccess("Authentication successful!")
+                                },
+                                onError = {error -> messageBarState.addError(error)}
+                            )
+                            // messageBarState.addSuccess("Authentication successful!")
                             loadingState = false
                         }.onFailure { error ->
                             if (error.message?.contains("A network error") == true) {
                                 messageBarState.addError("Internet connection unavailable.")
-                            }
-                            else if (error.message?.contains("Idtoken is null") == true) {
+                            } else if (error.message?.contains("Idtoken is null") == true) {
                                 messageBarState.addError("Sign in canceled.")
-                            }
-                            else {
+                            } else {
                                 messageBarState.addError(error.message ?: "Unknown")
                             }
                             loadingState = false

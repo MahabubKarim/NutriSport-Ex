@@ -1,4 +1,4 @@
-package com.nutrisport.shared.domain
+package com.nutrisport.shared.domain.model
 
 import kotlinx.serialization.Serializable
 
