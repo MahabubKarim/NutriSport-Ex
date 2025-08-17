@@ -1,12 +1,16 @@
 package com.nutrisport.data
 
-import com.nutrisport.shared.domain.model.Customer
-import com.nutrisport.shared.domain.repository.CustomerRepository
+import com.nutrisport.domain.model.Customer
+import com.nutrisport.domain.repository.CustomerRepository
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
+import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
 
 class CustomerRepositoryImpl : CustomerRepository {
+    override fun getCurrentUserId(): String? {
+        return Firebase.auth.currentUser?.uid
+    }
 
     override suspend fun createCustomer(
         user: FirebaseUser?,

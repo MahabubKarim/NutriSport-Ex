@@ -22,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "di"
+            baseName = "data"
             isStatic = true
         }
     }
@@ -41,7 +41,7 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(libs.auth.firebase.kmp)
 
-            implementation(project(":shared"))
+            implementation(project(":domain"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -55,7 +55,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

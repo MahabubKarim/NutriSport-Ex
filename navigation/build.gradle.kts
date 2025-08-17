@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.kotlinx.serialization)
 
             implementation(project(":feature:auth"))
+            implementation(project(":feature:home"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -56,7 +57,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
