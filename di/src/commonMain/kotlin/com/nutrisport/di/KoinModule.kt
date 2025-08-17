@@ -1,8 +1,8 @@
 package com.nutrisport.di
 
 import com.nutrisport.auth.AuthViewModel
-import com.nutrisport.data.CustomerRepositoryImpl
-import com.nutrisport.shared.domain.repository.CustomerRepository
+import com.nutrisport.data.repository.CustomerRepositoryImpl
+import com.nutrisport.domain.repository.CustomerRepository
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModelOf

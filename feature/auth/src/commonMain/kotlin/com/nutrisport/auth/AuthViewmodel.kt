@@ -2,7 +2,7 @@ package com.nutrisport.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nutrisport.shared.domain.repository.CustomerRepository
+import com.nutrisport.domain.repository.CustomerRepository
 import dev.gitlive.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

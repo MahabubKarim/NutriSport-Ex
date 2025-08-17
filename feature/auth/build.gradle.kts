@@ -47,6 +47,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
 
             implementation(project(":shared"))
+            implementation(project(":domain"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

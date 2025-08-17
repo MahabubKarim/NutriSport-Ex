@@ -1,4 +1,4 @@
-package com.nutrisport.data
+package com.nutrisport.data.repository
 
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.domain.repository.CustomerRepository

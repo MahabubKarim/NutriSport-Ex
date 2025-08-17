@@ -50,10 +50,12 @@ kotlin {
 
             implementation(libs.auth.kmp)
             implementation(libs.auth.firebase.kmp)
+            implementation(libs.koin.compose)
 
-            implementation(project(":navigation"))
             implementation(project(":shared"))
+            implementation(project(":domain"))
             implementation(project(":di"))
+            implementation(project(":navigation"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
