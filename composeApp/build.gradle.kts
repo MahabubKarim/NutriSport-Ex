@@ -29,7 +29,6 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -37,6 +36,9 @@ kotlin {
             // To pass that android context to our koin module
             // to initializing the Koin library on android
             implementation(libs.koin.android)
+
+            implementation(libs.firebase.auth.ktx)
+            implementation(libs.firebase.common.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
