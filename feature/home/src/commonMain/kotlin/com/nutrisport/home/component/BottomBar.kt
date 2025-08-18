@@ -62,7 +62,8 @@ fun BottomBar(
                     AnimatedContent(
                         targetState = customer
                     ) { customerState ->
-                        if (customerState?.isSuccess() == true && customerState.getSuccessData().cart.isNotEmpty()) {
+                        if (customerState?.isSuccess() == true
+                            && customerState.getSuccessData().cart.isNotEmpty()) {
                             Box(
                                 modifier = Modifier
                                     .size(8.dp)

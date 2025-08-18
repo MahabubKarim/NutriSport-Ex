@@ -11,6 +11,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nutrisport.home.component.BottomBar
@@ -26,9 +28,12 @@ fun HomeGraphScreen() {
         derivedStateOf {
             val route = currentRoute.value?.destination?.route.toString()
             when {
-                route.contains(BottomBarDestination.ProductsOverview.screen.toString()) -> BottomBarDestination.ProductsOverview
-                route.contains(BottomBarDestination.Cart.screen.toString()) -> BottomBarDestination.Cart
-                route.contains(BottomBarDestination.Categories.screen.toString()) -> BottomBarDestination.Categories
+                route.contains(BottomBarDestination.ProductsOverview.screen.toString())
+                    -> BottomBarDestination.ProductsOverview
+                route.contains(BottomBarDestination.Cart.screen.toString())
+                    -> BottomBarDestination.Cart
+                route.contains(BottomBarDestination.Categories.screen.toString())
+                    -> BottomBarDestination.Categories
                 else -> BottomBarDestination.ProductsOverview
             }
         }
@@ -45,6 +50,14 @@ fun HomeGraphScreen() {
                 )
 
         ) {
+            NavHost(
+                navController = navController,
+                startDestination = Screen.ProductsOverview
+            ) {
+                composable<Screen.ProductsOverview> {}
+                composable<Screen.Cart> {}
+                composable<Screen.Categories> {}
+            }
             Spacer(modifier = Modifier.weight(1f))
             BottomBar(
                 modifier = Modifier.padding(12.dp),
@@ -52,10 +65,10 @@ fun HomeGraphScreen() {
                 selected = selectedDestination,
                 onSelect = { destination ->
                     navController.navigate(destination.screen) {
-                        launchSingleTop = true
+                      //  launchSingleTop = true
                         popUpTo<Screen.ProductsOverview> {
                             saveState = true
-                            inclusive = false
+                           // inclusive = false
                         }
                         restoreState = true
                     }
