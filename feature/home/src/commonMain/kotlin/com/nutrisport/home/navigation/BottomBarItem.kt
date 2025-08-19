@@ -1,10 +1,10 @@
-package com.nutrisport.home.model
+package com.nutrisport.home.navigation
 
 import com.nutrisport.shared.Resources
 import com.nutrisport.shared.navigation.Screen
 import org.jetbrains.compose.resources.DrawableResource
 
-enum class BottomBarDestination(
+enum class BottomBarItem(
     val icon: DrawableResource,
     val title: String,
     val screen: Screen

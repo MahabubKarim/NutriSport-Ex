@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.nutrisport.domain.model.Customer
-import com.nutrisport.home.model.BottomBarDestination
+import com.nutrisport.home.navigation.BottomBarItem
 import com.nutrisport.shared.IconPrimary
 import com.nutrisport.shared.IconSecondary
 import com.nutrisport.shared.SurfaceLighter
@@ -32,8 +32,8 @@ import org.jetbrains.compose.resources.painterResource
 fun BottomBar(
     modifier: Modifier = Modifier,
     customer: RequestState<Customer>?,
-    selected: BottomBarDestination,
-    onSelect: (BottomBarDestination) -> Unit
+    selected: BottomBarItem,
+    onSelect: (BottomBarItem) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -47,7 +47,7 @@ fun BottomBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        BottomBarDestination.entries.forEach { destination ->
+        BottomBarItem.entries.forEach { destination ->
             val animatedTint by animateColorAsState(
                 targetValue = if (selected == destination) IconSecondary else IconPrimary
             )
@@ -58,7 +58,7 @@ fun BottomBar(
                     contentDescription = "Bottom Bar destination icon",
                     tint = animatedTint
                 )
-                if (destination == BottomBarDestination.Cart) {
+                if (destination == BottomBarItem.Cart) {
                     AnimatedContent(
                         targetState = customer
                     ) { customerState ->

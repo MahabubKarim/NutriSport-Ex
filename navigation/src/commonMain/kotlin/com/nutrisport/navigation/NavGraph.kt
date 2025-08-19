@@ -5,7 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nutrisport.auth.AuthScreen
-import com.nutrisport.home.HomeGraphScreen
+import com.nutrisport.home.screen.HomeGraphScreen
 import com.nutrisport.shared.navigation.Screen
 
 @Composable
