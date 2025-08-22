@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nutrisport.auth.AuthScreen
 import com.nutrisport.home.HomeGraphScreen
+import com.nutrisport.profile.ProfileScreen
 import com.nutrisport.shared.navigation.Screen
 
 @Composable
@@ -42,7 +43,7 @@ fun SetupNavGraph(startDestination: Screen = Screen.Auth) {
             )
         }
         composable<Screen.Profile> {
-           ProfileScreen()
+            ProfileScreen()
         }
     }
 }

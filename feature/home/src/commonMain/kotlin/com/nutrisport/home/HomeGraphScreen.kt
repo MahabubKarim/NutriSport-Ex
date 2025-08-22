@@ -112,7 +112,9 @@ fun HomeGraphScreen(
     ) {
         CustomDrawer(
             customer = null,
-            onProfileClick = { navigateToProfile },
+            onProfileClick = {
+                navigateToProfile()
+            },
             onContactUsClick = {},
             onSignOutClick = {
                 viewModel.signOut(
