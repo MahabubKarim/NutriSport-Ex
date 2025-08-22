@@ -66,6 +66,7 @@ object Resources {
         val GoogleLogo = Res.drawable.google_logo
         val PaypalLogo = Res.drawable.paypal_logo
     }
+
     object Flag {
         val India = Res.drawable.india
         val Usa = Res.drawable.usa

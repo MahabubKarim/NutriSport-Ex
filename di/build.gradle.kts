@@ -46,6 +46,7 @@ kotlin {
             implementation(project(":domain"))
             implementation(project(":data"))
             implementation(project(":feature:auth"))
+            implementation(project(":feature:home"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
