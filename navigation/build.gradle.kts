@@ -45,6 +45,7 @@ kotlin {
             implementation(project(":shared"))
             implementation(project(":feature:auth"))
             implementation(project(":feature:home"))
+            implementation(project(":feature:profile"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
