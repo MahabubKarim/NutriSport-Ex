@@ -98,7 +98,7 @@ fun HomeGraphScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(SurfaceLighter)
+            .background(animatedBackground)
             .systemBarsPadding()
     ) {
         CustomDrawer(
@@ -138,12 +138,26 @@ fun HomeGraphScreen() {
                             }
                         },
                         navigationIcon = {
-                            IconButton(onClick = {drawerState = drawerState.opposite()}) {
-                                Icon(
-                                    painter = painterResource(Resources.Icon.Menu),
-                                    contentDescription = "Menu Icon",
-                                    tint = IconPrimary
-                                )
+                            AnimatedContent(
+                                targetState = drawerState
+                            ) { drawer ->
+                                if (drawer.isOpened()) {
+                                    IconButton(onClick = { drawerState = drawerState.opposite() }) {
+                                        Icon(
+                                            painter = painterResource(Resources.Icon.Close),
+                                            contentDescription = "Close icon",
+                                            tint = IconPrimary
+                                        )
+                                    }
+                                } else {
+                                    IconButton(onClick = { drawerState = drawerState.opposite() }) {
+                                        Icon(
+                                            painter = painterResource(Resources.Icon.Menu),
+                                            contentDescription = "Menu icon",
+                                            tint = IconPrimary
+                                        )
+                                    }
+                                }
                             }
                         },
                         colors = centerAlignedTopAppBarColors(
