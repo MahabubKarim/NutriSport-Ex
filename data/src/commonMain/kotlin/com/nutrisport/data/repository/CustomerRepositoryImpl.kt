@@ -7,6 +7,9 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
 
 class CustomerRepositoryImpl : CustomerRepository {
     override fun getCurrentUserId(): String? {
@@ -54,6 +57,85 @@ class CustomerRepositoryImpl : CustomerRepository {
             RequestState.Success(data = Unit)
         } catch (e: Exception) {
             RequestState.Error("Error while signing out: ${e.message}")
+        }
+    }
+
+    override fun readCustomerFlow(): Flow<RequestState<Customer>> = channelFlow {
+        try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val database = Firebase.firestore
+                database.collection(collectionPath = "customer")
+                    .document(userId)
+                    .snapshots
+                    .collectLatest { document ->
+                        if (document.exists) {
+                            /*val privateDataDocument =
+                                database.collection(collectionPath = "customer")
+                                    .document(userId)
+                                    .collection(collectionPath = "privateData")
+                                    .document("role")
+                                    .get()*/
+
+                            val customer = Customer(
+                                id = document.id,
+                                firstName = document.get(field = "firstName"),
+                                lastName = document.get(field = "lastName"),
+                                email = document.get(field = "email"),
+                                city = document.get(field = "city"),
+                                postalCode = document.get(field = "postalCode"),
+                                address = document.get(field = "address"),
+                                phoneNumber = document.get(field = "phoneNumber"),
+                                cart = document.get(field = "cart"),
+                                //isAdmin = privateDataDocument.get(field = "isAdmin")
+                            )
+                            send(RequestState.Success(data = customer))
+                        } else {
+                            send(RequestState.Error("Queried customer document does not exist."))
+                        }
+                    }
+            } else {
+                send(RequestState.Error("User is not available."))
+            }
+        } catch (e: Exception) {
+            send(RequestState.Error("Error while reading a Customer information: ${e.message}"))
+        }
+    }
+
+    override suspend fun updateCustomer(
+        customer: Customer,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val firestore = Firebase.firestore
+                val customerCollection = firestore.collection(collectionPath = "customer")
+
+                val existingCustomer = customerCollection
+                    .document(customer.id)
+                    .get()
+                if (existingCustomer.exists) {
+                    customerCollection
+                        .document(customer.id)
+                        .update(
+                            "firstName" to customer.firstName,
+                            "lastName" to customer.lastName,
+                            "city" to customer.city,
+                            "postalCode" to customer.postalCode,
+                            "address" to customer.address,
+                            "phoneNumber" to customer.phoneNumber
+                        )
+                    onSuccess()
+                } else {
+                    onError("Customer not found.")
+                }
+            } else {
+                onError("User is not available.")
+            }
+        } catch (e: Exception) {
+            onError("Error while updating a Customer information: ${e.message}")
         }
     }
 
