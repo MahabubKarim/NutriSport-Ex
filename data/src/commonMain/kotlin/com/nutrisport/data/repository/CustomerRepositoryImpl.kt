@@ -61,46 +61,41 @@ class CustomerRepositoryImpl : CustomerRepository {
     }
 
     override fun readCustomerFlow(): Flow<RequestState<Customer>> = channelFlow {
-        try {
-            val userId = getCurrentUserId()
-            if (userId != null) {
-                val database = Firebase.firestore
-                database.collection(collectionPath = "customer")
-                    .document(userId)
-                    .snapshots
-                    .collectLatest { document ->
-                        if (document.exists) {
-                            /*val privateDataDocument =
-                                database.collection(collectionPath = "customer")
-                                    .document(userId)
-                                    .collection(collectionPath = "privateData")
-                                    .document("role")
-                                    .get()*/
+        val userId = getCurrentUserId()
+        if (userId == null) {
+            send(RequestState.Error("User is not available."))
+            return@channelFlow
+        }
 
-                            val customer = Customer(
-                                id = document.id,
-                                firstName = document.get(field = "firstName"),
-                                lastName = document.get(field = "lastName"),
-                                email = document.get(field = "email"),
-                                city = document.get(field = "city"),
-                                postalCode = document.get(field = "postalCode"),
-                                address = document.get(field = "address"),
-                                phoneNumber = document.get(field = "phoneNumber"),
-                                cart = document.get(field = "cart"),
-                                //isAdmin = privateDataDocument.get(field = "isAdmin")
-                            )
-                            send(RequestState.Success(data = customer))
-                        } else {
-                            send(RequestState.Error("Queried customer document does not exist."))
-                        }
+        val database = Firebase.firestore
+
+        try {
+            database.collection("customer")
+                .document(userId)
+                .snapshots
+                .collectLatest { document ->
+                    if (document.exists) {
+                        val customer = Customer(
+                            id = document.id,
+                            firstName = document.get("firstName"),
+                            lastName = document.get("lastName"),
+                            email = document.get("email"),
+                            city = document.get("city"),
+                            postalCode = document.get("postalCode"),
+                            address = document.get("address"),
+                            phoneNumber = document.get("phoneNumber"),
+                            cart = document.get("cart")
+                        )
+                        send(RequestState.Success(customer))
+                    } else {
+                        send(RequestState.Error("Customer document does not exist."))
                     }
-            } else {
-                send(RequestState.Error("User is not available."))
-            }
+                }
         } catch (e: Exception) {
-            send(RequestState.Error("Error while reading a Customer information: ${e.message}"))
+            send(RequestState.Error("Error while reading customer info: ${e.message}"))
         }
     }
+
 
     override suspend fun updateCustomer(
         customer: Customer,
