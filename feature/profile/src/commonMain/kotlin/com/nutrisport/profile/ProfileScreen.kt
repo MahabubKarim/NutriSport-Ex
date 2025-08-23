@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nutrisport.shared.Country
 import com.nutrisport.shared.Resources
 import com.nutrisport.shared.Surface
 import com.nutrisport.shared.component.PrimaryButton
@@ -25,6 +26,8 @@ fun ProfileScreen() {
     ) {
         ProfileForm(
             firstName = "Max",
+            country = Country.Serbia,
+            onCountrySelect = {  },
             onFirstNameChange = {},
             lastName = "",
             onLastNameChange = {},

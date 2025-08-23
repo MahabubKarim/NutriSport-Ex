@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.home.navigation.BottomBarItem
@@ -51,9 +52,11 @@ fun BottomBar(
             val animatedTint by animateColorAsState(
                 targetValue = if (selected == destination) IconSecondary else IconPrimary
             )
-            Box(contentAlignment = Alignment.TopEnd) {
+            Box(contentAlignment = Alignment.BottomEnd) {
                 Icon(
-                    modifier = Modifier.clickable { onSelect(destination) },
+                    modifier = Modifier
+                        .clickable { onSelect(destination) }
+                        .background(Color.Transparent),
                     painter = painterResource(destination.icon),
                     contentDescription = "Bottom Bar destination icon",
                     tint = animatedTint
@@ -63,7 +66,8 @@ fun BottomBar(
                         targetState = customer
                     ) { customerState ->
                         if (customerState?.isSuccess() == true
-                            && customerState.getSuccessData().cart.isNotEmpty()) {
+                            && customerState.getSuccessData().cart.isNotEmpty()
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(8.dp)
@@ -76,7 +80,5 @@ fun BottomBar(
                 }
             }
         }
-
     }
-
 }

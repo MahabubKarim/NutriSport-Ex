@@ -1,10 +1,15 @@
 package com.nutrisport.shared.component
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -13,13 +18,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.nutrisport.shared.Country
+import com.nutrisport.shared.component.dialog.CountryPickerDialog
 
 @Composable
 fun ProfileForm(
     modifier: Modifier = Modifier,
+    country: Country,
+    onCountrySelect: (Country) -> Unit,
     firstName: String,
     onFirstNameChange: (String) -> Unit,
     lastName: String,
@@ -36,7 +46,7 @@ fun ProfileForm(
 ) {
     var showCountryDialog by remember { mutableStateOf(false) }
 
-    /* AnimatedVisibility(
+     AnimatedVisibility(
          visible = showCountryDialog
      ) {
          CountryPickerDialog(
@@ -47,7 +57,7 @@ fun ProfileForm(
                  onCountrySelect(selectedCountry)
              }
          )
-     }*/
+     }
 
     Column(
         modifier = modifier
@@ -99,7 +109,7 @@ fun ProfileForm(
             placeholder = "Address",
             error = address?.length !in 3..50
         )
-        /*Row(
+        Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -118,6 +128,6 @@ fun ProfileForm(
                     keyboardType = KeyboardType.Number
                 )
             )
-        }*/
+        }
     }
 }
