@@ -28,6 +28,7 @@ dependencyResolutionManagement {
     }
 }
 
+include(":feature:admin-panel")
 include(":composeApp")
 include(":shared")
 include(":domain")

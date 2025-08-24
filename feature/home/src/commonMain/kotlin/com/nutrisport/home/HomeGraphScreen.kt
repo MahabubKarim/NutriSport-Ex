@@ -2,9 +2,14 @@ package com.nutrisport.home
 
 import ContentWithMessageBar
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +28,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.centerAlignedTopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,11 +60,12 @@ import com.nutrisport.shared.SurfaceLighter
 import com.nutrisport.shared.TextPrimary
 import com.nutrisport.shared.navigation.Screen
 import com.nutrisport.shared.util.getScreenWidth
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun HomeGraphScreen(
     navigateToAuth: () -> Unit,
@@ -71,11 +78,8 @@ fun HomeGraphScreen(
             val route = currentRoute.value?.destination?.route.toString()
             when {
                 route.contains(BottomBarItem.ProductsOverview.screen.toString()) -> BottomBarItem.ProductsOverview
-
                 route.contains(BottomBarItem.Cart.screen.toString()) -> BottomBarItem.Cart
-
                 route.contains(BottomBarItem.Categories.screen.toString()) -> BottomBarItem.Categories
-
                 else -> BottomBarItem.ProductsOverview
             }
         }
@@ -104,6 +108,16 @@ fun HomeGraphScreen(
     val viewModel = koinViewModel<HomeGraphViewModel>()
     val messageBarState = rememberMessageBarState()
 
+    var shouldNavigateToProfile by remember { mutableStateOf(false) }
+
+    LaunchedEffect(drawerState, shouldNavigateToProfile) {
+        if (shouldNavigateToProfile && !drawerState.isOpened()) {
+            delay(250)
+            navigateToProfile()
+            shouldNavigateToProfile = false
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -113,7 +127,8 @@ fun HomeGraphScreen(
         CustomDrawer(
             customer = null,
             onProfileClick = {
-                navigateToProfile()
+                shouldNavigateToProfile = true
+                drawerState = drawerState.opposite()
             },
             onContactUsClick = {},
             onSignOutClick = {
@@ -145,7 +160,10 @@ fun HomeGraphScreen(
                     CenterAlignedTopAppBar(
                         title = {
                             AnimatedContent(
-                                targetState = selectedDestination
+                                targetState = selectedDestination,
+                                transitionSpec = {
+                                    fadeIn() togetherWith (fadeOut())
+                                },
                             ) { destination ->
                                 Text(
                                     text = destination.title,
