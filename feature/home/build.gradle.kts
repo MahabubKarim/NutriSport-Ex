@@ -38,10 +38,16 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
+            implementation(libs.compose.navigation)
+
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
+            implementation(libs.messagebar.kmp)
+
             implementation(project(":shared"))
+            implementation(project(":domain"))
+            implementation(project(":feature:profile"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

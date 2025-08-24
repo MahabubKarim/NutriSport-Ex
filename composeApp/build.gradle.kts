@@ -29,19 +29,24 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(compose.material3)
+            implementation(libs.google.material)
             implementation(libs.splash.screen)
             // To pass that android context to our koin module
             // to initializing the Koin library on android
             implementation(libs.koin.android)
+
+            implementation(libs.firebase.auth.ktx)
+            implementation(libs.firebase.common.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(libs.google.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)

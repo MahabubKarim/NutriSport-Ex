@@ -33,4 +33,54 @@ sealed class RequestState<out T> {
     fun getSuccessData() = (this as Success).data
     fun getSuccessDataOrNull() = if (this.isSuccess()) this.getSuccessData() else null
     fun getErrorMessage(): String = (this as Error).message
+
+    @Composable
+    fun <T> RequestState<T>.DisplayResult(
+        modifier: Modifier = Modifier,
+        onIdle: (@Composable () -> Unit)? = null,
+        onLoading: (@Composable () -> Unit)? = null,
+        onError: (@Composable (String) -> Unit)? = null,
+        onSuccess: @Composable (T) -> Unit,
+        transitionSpec: ContentTransform? = scaleIn(tween(durationMillis = 400))
+                + fadeIn(tween(durationMillis = 800))
+                togetherWith scaleOut(tween(durationMillis = 400))
+                + fadeOut(
+            tween(durationMillis = 800)
+        ),
+        backgroundColor: Color? = null
+    ) {
+        AnimatedContent(
+            modifier = modifier
+                .background(color = backgroundColor ?: Color.Unspecified),
+            targetState = this,
+            transitionSpec = {
+                transitionSpec ?: (EnterTransition.None togetherWith ExitTransition.None)
+            },
+            label = "Content Animation"
+        ) { state ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                when (state) {
+                    is RequestState.Idle -> {
+                        onIdle?.invoke()
+                    }
+
+                    is RequestState.Loading -> {
+                        onLoading?.invoke()
+                    }
+
+                    is RequestState.Error -> {
+                        onError?.invoke(state.getErrorMessage())
+                    }
+
+                    is RequestState.Success -> {
+                        onSuccess(state.getSuccessData())
+                    }
+                }
+            }
+        }
+    }
 }

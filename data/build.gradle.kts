@@ -41,6 +41,7 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(libs.auth.firebase.kmp)
 
+            implementation(project(":shared"))
             implementation(project(":domain"))
         }
         commonTest.dependencies {

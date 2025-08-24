@@ -1,11 +1,15 @@
 package com.nutrisport.shared
 
 // Surface  app backgrounds, sheets, or panels.
+
 // Primary, Secondary, Tertiary  emphasize foreground elements.
+
 // Container  backgrounds of interactive components.
+
 // On  the contrasting color (e.g., white or black depending on theme)
-// Variant  variants are designed to provide visual hierarchy while staying consistent with
-//           the palette.
+
+// Variant  variants are designed to provide visual hierarchy while staying consistent with the palette.
+
 // https://m3.material.io/styles/color/roles
 
 import androidx.compose.ui.graphics.Color
