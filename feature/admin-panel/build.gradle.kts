@@ -53,7 +53,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nutrisport.admin-panel"
+    namespace = "com.nutrisport.adminpanel"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
