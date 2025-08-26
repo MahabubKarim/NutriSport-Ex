@@ -41,7 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.nutrisport.shared.Alpha
-import com.nutrisport.shared.Country
+import com.nutrisport.shared.component.dialog.Country
 import com.nutrisport.shared.FontSize
 import com.nutrisport.shared.IconWhite
 import com.nutrisport.shared.Resources

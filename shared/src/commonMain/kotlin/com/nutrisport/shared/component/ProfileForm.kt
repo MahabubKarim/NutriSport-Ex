@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.nutrisport.shared.Country
+import com.nutrisport.shared.component.dialog.Country
 import com.nutrisport.shared.component.dialog.CountryPickerDialog
 
 @Composable

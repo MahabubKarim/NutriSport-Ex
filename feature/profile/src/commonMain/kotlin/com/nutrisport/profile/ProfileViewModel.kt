@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.domain.model.PhoneNumber
 import com.nutrisport.domain.repository.CustomerRepository
-import com.nutrisport.shared.Country
+import com.nutrisport.shared.component.dialog.Country
 import com.nutrisport.shared.util.RequestState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
