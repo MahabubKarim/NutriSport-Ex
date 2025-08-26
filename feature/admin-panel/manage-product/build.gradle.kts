@@ -28,6 +28,11 @@ kotlin {
     }
 
     sourceSets {
+        // In a Kotlin Multiplatform project, the Ktor HTTP client uses the shared
+        // ktor-client-core for common functionality, but requires platform-specific
+        // engines—ktor-client-okhttp for Android and ktor-client-darwin for iOS—declared
+        // in their respective source sets to handle networking according to each
+        // platform's system.
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.android.client)
