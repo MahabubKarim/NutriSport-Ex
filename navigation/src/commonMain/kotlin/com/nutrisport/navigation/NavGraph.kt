@@ -65,8 +65,12 @@ fun SetupNavGraph(startDestination: Screen = Screen.Auth) {
                 }
             )
         }
-        composable<Screen.ManageProduct> {
-            val id = it.toRoute<Screen.ManageProduct>().id
+        composable<Screen.ManageProduct> { backStackEntry ->
+            // The library serializes Screen.ManageProduct into a route string
+            // (e.g. /manageProduct?id=123) and pushes it onto the back stack.
+            // toRoute<T>() deserializes the arguments back into your Screen.ManageProduct data class.
+            // That’s where the id becomes available again.
+            val id = backStackEntry.toRoute<Screen.ManageProduct>().id
             ManageProductScreen(
                 id = id,
                 navigateBack = {
