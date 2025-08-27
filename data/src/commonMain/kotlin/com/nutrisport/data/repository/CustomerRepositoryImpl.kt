@@ -36,11 +36,12 @@ class CustomerRepositoryImpl : CustomerRepository {
                 if (customerExists) {
                     onSuccess()
                 } else {
-                    customerCollection.document(user.uid).set(customer)
-                    /*customerCollection.document(user.uid)
+                    customerCollection.document(user.uid)
+                        .set(customer)
+                    customerCollection.document(user.uid)
                         .collection("privateData")
                         .document("role")
-                        .set(mapOf("isAdmin" to false))*/
+                        .set(mapOf("isAdmin" to true))
                     onSuccess()
                 }
             } else {
@@ -84,7 +85,8 @@ class CustomerRepositoryImpl : CustomerRepository {
                             postalCode = document.get("postalCode"),
                             address = document.get("address"),
                             phoneNumber = document.get("phoneNumber"),
-                            cart = document.get("cart")
+                            cart = document.get("cart"),
+                            isAdmin = document.get("isAdmin")
                         )
                         send(RequestState.Success(customer))
                     } else {

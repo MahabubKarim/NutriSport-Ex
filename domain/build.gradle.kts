@@ -42,6 +42,8 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(libs.auth.firebase.kmp)
 
+            implementation(libs.firebase.storage)
+
             implementation(libs.kotlinx.serialization)
 
             implementation(project(":shared"))

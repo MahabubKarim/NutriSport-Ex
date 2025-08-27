@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component.dialog
+package com.nutrisport.shared.util
 
 import com.nutrisport.shared.Resources
 import org.jetbrains.compose.resources.DrawableResource

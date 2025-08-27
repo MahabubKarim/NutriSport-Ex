@@ -47,6 +47,7 @@ kotlin {
             implementation(project(":feature:auth"))
             implementation(project(":feature:home"))
             implementation(project(":feature:profile"))
+            implementation(project(":feature:admin-panel:manage-product"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
