@@ -64,6 +64,7 @@ kotlin {
             implementation(libs.coil3.compose.core)
             implementation(libs.coil3.network.ktor)
 
+            implementation(project(":core"))
             implementation(project(":shared"))
             implementation(project(":domain"))
             implementation(project(":data"))

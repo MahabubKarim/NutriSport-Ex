@@ -28,6 +28,7 @@ dependencyResolutionManagement {
     }
 }
 
+include(":core")
 include(":composeApp")
 include(":shared")
 include(":domain")

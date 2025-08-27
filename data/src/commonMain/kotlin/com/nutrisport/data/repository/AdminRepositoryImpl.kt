@@ -1,8 +1,8 @@
 package com.nutrisport.data.repository
 
+import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Product
 import com.nutrisport.domain.repository.AdminRepository
-import com.nutrisport.shared.util.RequestState
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.Direction

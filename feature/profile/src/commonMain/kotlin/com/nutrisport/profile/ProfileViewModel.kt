@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.domain.model.PhoneNumber
 import com.nutrisport.domain.repository.CustomerRepository
 import com.nutrisport.shared.util.Country
-import com.nutrisport.shared.util.RequestState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

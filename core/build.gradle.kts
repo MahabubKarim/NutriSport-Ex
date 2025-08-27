@@ -23,7 +23,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "shared"
+            baseName = "core"
             isStatic = true
         }
     }
@@ -52,8 +52,6 @@ kotlin {
             implementation(libs.coil3.compose)
             implementation(libs.coil3.compose.core)
             implementation(libs.coil3.network.ktor)
-
-            implementation(project(":domain"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -62,7 +60,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nutrisport.shared"
+    namespace = "com.nutrisport.core"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

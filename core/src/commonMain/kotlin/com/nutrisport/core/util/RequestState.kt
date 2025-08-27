@@ -1,5 +1,4 @@
-/*
-package com.nutrisport.shared.util
+package com.mmk.nutrisport.util
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
@@ -84,4 +83,4 @@ sealed class RequestState<out T> {
             }
         }
     }
-}*/
+}

@@ -1,7 +1,7 @@
 package com.nutrisport.domain.repository
 
+import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Customer
-import com.nutrisport.shared.util.RequestState
 import dev.gitlive.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 

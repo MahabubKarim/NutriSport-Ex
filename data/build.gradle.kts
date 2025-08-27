@@ -42,6 +42,7 @@ kotlin {
             implementation(libs.firebase.storage)
             implementation(libs.auth.firebase.kmp)
 
+            implementation(project(":core"))
             implementation(project(":shared"))
             implementation(project(":domain"))
         }

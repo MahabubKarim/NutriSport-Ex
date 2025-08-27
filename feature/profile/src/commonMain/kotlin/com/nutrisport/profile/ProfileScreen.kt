@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mmk.nutrisport.util.RequestState.Idle.DisplayResult
 import com.nutrisport.shared.BebasNeueFont
 import com.nutrisport.shared.FontSize
 import com.nutrisport.shared.IconPrimary

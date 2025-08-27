@@ -46,7 +46,7 @@ kotlin {
 
             implementation(libs.kotlinx.serialization)
 
-            implementation(project(":shared"))
+            implementation(project(":core"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
