@@ -29,6 +29,10 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -42,6 +46,7 @@ kotlin {
             implementation(libs.kotlinx.serialization)
 
             implementation(libs.auth.firebase.kmp)
+            implementation(libs.firebase.storage)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
