@@ -16,6 +16,7 @@ val sharedModule = module {
     viewModelOf(::AuthViewModel)
     viewModelOf(::HomeGraphViewModel)
     viewModelOf(::ProfileViewModel)
+    viewModelOf(::AdminPanelViewModel)
     viewModelOf(::ManageProductViewModel)
 }
 
