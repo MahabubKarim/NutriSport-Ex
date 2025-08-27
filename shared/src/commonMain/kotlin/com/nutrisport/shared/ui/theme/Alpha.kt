@@ -1,4 +1,4 @@
-package com.nutrisport.shared
+package com.nutrisport.shared.ui.theme
 
 object Alpha {
     const val FULL = 1f

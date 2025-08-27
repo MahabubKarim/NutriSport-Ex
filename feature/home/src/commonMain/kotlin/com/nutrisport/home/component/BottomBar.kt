@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.home.navigation.BottomBarItem
-import com.nutrisport.shared.IconPrimary
-import com.nutrisport.shared.IconSecondary
-import com.nutrisport.shared.SurfaceLighter
+import com.nutrisport.shared.ui.theme.IconPrimary
+import com.nutrisport.shared.ui.theme.IconSecondary
+import com.nutrisport.shared.ui.theme.SurfaceLighter
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

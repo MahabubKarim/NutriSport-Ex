@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component
+package com.nutrisport.shared.ui.component
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.nutrisport.shared.Alpha
-import com.nutrisport.shared.ButtonDisabled
-import com.nutrisport.shared.ButtonPrimary
-import com.nutrisport.shared.ButtonSecondary
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.IconPrimary
-import com.nutrisport.shared.Resources
-import com.nutrisport.shared.TextPrimary
+import com.nutrisport.shared.ui.theme.Alpha
+import com.nutrisport.shared.ui.theme.ButtonDisabled
+import com.nutrisport.shared.ui.theme.ButtonPrimary
+import com.nutrisport.shared.ui.theme.ButtonSecondary
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.IconPrimary
+import com.nutrisport.shared.ui.theme.Resources
+import com.nutrisport.shared.ui.theme.TextPrimary
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 

@@ -1,6 +1,6 @@
 package com.nutrisport.home.navigation
 
-import com.nutrisport.shared.Resources
+import com.nutrisport.shared.ui.theme.Resources
 import com.nutrisport.shared.navigation.Screen
 import org.jetbrains.compose.resources.DrawableResource
 

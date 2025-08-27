@@ -1,4 +1,4 @@
-package com.nutrisport.shared.util
+package com.nutrisport.shared.platform
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -55,7 +55,7 @@ actual class PhotoPicker {
     }
 
     private fun getCurrentViewController(): UIViewController? {
-        val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
+        val rootViewController = UIApplication.Companion.sharedApplication.keyWindow?.rootViewController
         return findTopViewController(rootViewController)
     }
 

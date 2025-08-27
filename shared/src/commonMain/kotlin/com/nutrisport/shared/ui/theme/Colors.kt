@@ -1,4 +1,4 @@
-package com.nutrisport.shared
+package com.nutrisport.shared.ui.theme
 
 // Surface  app backgrounds, sheets, or panels.
 

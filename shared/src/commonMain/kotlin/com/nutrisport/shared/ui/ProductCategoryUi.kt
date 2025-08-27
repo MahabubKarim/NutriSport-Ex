@@ -1,13 +1,13 @@
-package com.nutrisport.shared.util
+package com.nutrisport.shared.ui
 
 import androidx.compose.ui.graphics.Color
-import com.nutrisport.shared.CategoryBlue
-import com.nutrisport.shared.CategoryGreen
-import com.nutrisport.shared.CategoryPurple
-import com.nutrisport.shared.CategoryRed
-import com.nutrisport.shared.CategoryYellow
+import com.nutrisport.shared.ui.theme.CategoryBlue
+import com.nutrisport.shared.ui.theme.CategoryGreen
+import com.nutrisport.shared.ui.theme.CategoryPurple
+import com.nutrisport.shared.ui.theme.CategoryRed
+import com.nutrisport.shared.ui.theme.CategoryYellow
 
-enum class ProductCategory(
+enum class ProductCategoryUi(
     val title: String,
     val color: Color
 ) {

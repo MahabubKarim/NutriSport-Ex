@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component.dialog
+package com.nutrisport.shared.ui.component.dialog
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -28,21 +28,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.nutrisport.shared.Alpha
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.IconPrimary
-import com.nutrisport.shared.Resources
-import com.nutrisport.shared.Surface
-import com.nutrisport.shared.TextPrimary
-import com.nutrisport.shared.TextSecondary
-import com.nutrisport.shared.util.ProductCategory
+import com.nutrisport.shared.ui.theme.Alpha
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.IconPrimary
+import com.nutrisport.shared.ui.theme.Resources
+import com.nutrisport.shared.ui.theme.Surface
+import com.nutrisport.shared.ui.theme.TextPrimary
+import com.nutrisport.shared.ui.theme.TextSecondary
+import com.nutrisport.shared.ui.ProductCategoryUi
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun CategoriesDialog(
-    category: ProductCategory,
+    category: ProductCategoryUi,
     onDismiss: () -> Unit,
-    onConfirmClick: (ProductCategory) -> Unit,
+    onConfirmClick: (ProductCategoryUi) -> Unit,
 ) {
     var selectedCategory by remember(category) { mutableStateOf(category) }
 
@@ -61,7 +61,7 @@ fun CategoriesDialog(
                     .fillMaxWidth()
                     .height(300.dp)
             ) {
-                ProductCategory.entries.forEach { currentCategory ->
+                ProductCategoryUi.entries.forEach { currentCategory ->
                     val animatedBackground by animateColorAsState(
                         targetValue = if (currentCategory == selectedCategory) currentCategory.color.copy(
                             alpha = Alpha.TWENTY_PERCENT

@@ -1,4 +1,4 @@
-package com.nutrisport.shared.util
+package com.nutrisport.shared.platform
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest

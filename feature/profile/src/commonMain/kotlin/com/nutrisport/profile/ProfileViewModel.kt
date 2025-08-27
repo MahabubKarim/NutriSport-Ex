@@ -9,7 +9,7 @@ import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.domain.model.PhoneNumber
 import com.nutrisport.domain.repository.CustomerRepository
-import com.nutrisport.shared.util.Country
+import com.nutrisport.shared.ui.Country
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

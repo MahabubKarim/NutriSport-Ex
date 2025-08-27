@@ -1,4 +1,4 @@
-package com.nutrisport.shared
+package com.nutrisport.shared.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily

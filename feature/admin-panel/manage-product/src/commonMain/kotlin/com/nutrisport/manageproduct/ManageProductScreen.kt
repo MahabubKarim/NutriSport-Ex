@@ -51,34 +51,33 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.mmk.nutrisport.util.RequestState
 import com.mmk.nutrisport.util.RequestState.Idle.DisplayResult
-import com.nutrisport.shared.BebasNeueFont
-import com.nutrisport.shared.BorderIdle
-import com.nutrisport.shared.ButtonPrimary
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.IconPrimary
-import com.nutrisport.shared.Resources
-import com.nutrisport.shared.Surface
-import com.nutrisport.shared.SurfaceBrand
-import com.nutrisport.shared.SurfaceDarker
-import com.nutrisport.shared.SurfaceError
-import com.nutrisport.shared.SurfaceLighter
-import com.nutrisport.shared.SurfaceSecondary
-import com.nutrisport.shared.TextPrimary
-import com.nutrisport.shared.TextSecondary
-import com.nutrisport.shared.TextWhite
-import com.nutrisport.shared.component.AlertTextField
-import com.nutrisport.shared.component.CustomTextField
-import com.nutrisport.shared.component.ErrorCard
-import com.nutrisport.shared.component.LoadingCard
-import com.nutrisport.shared.component.PrimaryButton
-import com.nutrisport.shared.component.dialog.CategoriesDialog
-import com.nutrisport.shared.util.PhotoPicker
-import com.nutrisport.shared.util.ProductCategory
+import com.nutrisport.shared.ui.theme.BebasNeueFont
+import com.nutrisport.shared.ui.theme.BorderIdle
+import com.nutrisport.shared.ui.theme.ButtonPrimary
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.IconPrimary
+import com.nutrisport.shared.ui.theme.Resources
+import com.nutrisport.shared.ui.theme.Surface
+import com.nutrisport.shared.ui.theme.SurfaceBrand
+import com.nutrisport.shared.ui.theme.SurfaceDarker
+import com.nutrisport.shared.ui.theme.SurfaceError
+import com.nutrisport.shared.ui.theme.SurfaceLighter
+import com.nutrisport.shared.ui.theme.SurfaceSecondary
+import com.nutrisport.shared.ui.theme.TextPrimary
+import com.nutrisport.shared.ui.theme.TextSecondary
+import com.nutrisport.shared.ui.theme.TextWhite
+import com.nutrisport.shared.ui.component.AlertTextField
+import com.nutrisport.shared.ui.component.CustomTextField
+import com.nutrisport.shared.ui.component.ErrorCard
+import com.nutrisport.shared.ui.component.LoadingCard
+import com.nutrisport.shared.ui.component.PrimaryButton
+import com.nutrisport.shared.ui.component.dialog.CategoriesDialog
+import com.nutrisport.shared.platform.PhotoPicker
+import com.nutrisport.shared.ui.ProductCategoryUi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
-import kotlin.text.category
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -341,7 +340,7 @@ fun ManageProductScreen(
                         onClick = { showCategoriesDialog = true }
                     )
                     AnimatedVisibility(
-                        visible = screenState.category != ProductCategory.Accessories
+                        visible = screenState.category != ProductCategoryUi.Accessories
                     ) {
                         Column {
                             CustomTextField(

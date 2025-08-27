@@ -1,6 +1,6 @@
-package com.nutrisport.shared.util
+package com.nutrisport.shared.ui
 
-import com.nutrisport.shared.Resources
+import com.nutrisport.shared.ui.theme.Resources
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class Country(

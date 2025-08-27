@@ -1,4 +1,4 @@
-package com.nutrisport.shared.util
+package com.nutrisport.shared.platform
 
 import androidx.compose.runtime.Composable
 import dev.gitlive.firebase.storage.File

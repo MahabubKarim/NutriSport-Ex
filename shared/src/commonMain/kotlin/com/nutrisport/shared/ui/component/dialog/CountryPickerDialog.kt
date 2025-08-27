@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component.dialog
+package com.nutrisport.shared.ui.component.dialog
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -40,18 +40,18 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.nutrisport.shared.Alpha
-import com.nutrisport.shared.util.Country
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.IconWhite
-import com.nutrisport.shared.Resources
-import com.nutrisport.shared.Surface
-import com.nutrisport.shared.SurfaceLighter
-import com.nutrisport.shared.SurfaceSecondary
-import com.nutrisport.shared.TextPrimary
-import com.nutrisport.shared.TextSecondary
-import com.nutrisport.shared.component.CustomTextField
-import com.nutrisport.shared.component.ErrorCard
+import com.nutrisport.shared.ui.theme.Alpha
+import com.nutrisport.shared.ui.Country
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.IconWhite
+import com.nutrisport.shared.ui.theme.Resources
+import com.nutrisport.shared.ui.theme.Surface
+import com.nutrisport.shared.ui.theme.SurfaceLighter
+import com.nutrisport.shared.ui.theme.SurfaceSecondary
+import com.nutrisport.shared.ui.theme.TextPrimary
+import com.nutrisport.shared.ui.theme.TextSecondary
+import com.nutrisport.shared.ui.component.CustomTextField
+import com.nutrisport.shared.ui.component.ErrorCard
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

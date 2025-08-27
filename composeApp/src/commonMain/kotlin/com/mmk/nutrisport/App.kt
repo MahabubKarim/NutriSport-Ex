@@ -14,7 +14,7 @@ import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
 import com.nutrisport.domain.repository.CustomerRepository
 import com.nutrisport.navigation.SetupNavGraph
-import com.nutrisport.shared.Constants
+import com.nutrisport.shared.util.Constants
 import com.nutrisport.shared.navigation.Screen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject

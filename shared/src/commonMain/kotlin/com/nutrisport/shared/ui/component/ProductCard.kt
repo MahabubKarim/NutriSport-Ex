@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component
+package com.nutrisport.shared.ui.component
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
@@ -32,15 +32,15 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.nutrisport.domain.model.Product
-import com.nutrisport.shared.Alpha
-import com.nutrisport.shared.BorderIdle
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.Resources
-import com.nutrisport.shared.RobotoCondensedFont
-import com.nutrisport.shared.SurfaceLighter
-import com.nutrisport.shared.TextPrimary
-import com.nutrisport.shared.TextSecondary
-import com.nutrisport.shared.util.ProductCategory
+import com.nutrisport.shared.ui.theme.Alpha
+import com.nutrisport.shared.ui.theme.BorderIdle
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.Resources
+import com.nutrisport.shared.ui.theme.RobotoCondensedFont
+import com.nutrisport.shared.ui.theme.SurfaceLighter
+import com.nutrisport.shared.ui.theme.TextPrimary
+import com.nutrisport.shared.ui.theme.TextSecondary
+import com.nutrisport.shared.ui.ProductCategoryUi
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -115,7 +115,7 @@ fun ProductCard(
                 AnimatedContent(
                     targetState = product.category
                 ) { category ->
-                    if (ProductCategory.valueOf(category) == ProductCategory.Accessories) {
+                    if (ProductCategoryUi.valueOf(category) == ProductCategoryUi.Accessories) {
                         Spacer(modifier = Modifier.weight(1f))
                     } else {
                         Row(

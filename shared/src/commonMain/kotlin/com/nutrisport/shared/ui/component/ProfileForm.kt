@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component
+package com.nutrisport.shared.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.nutrisport.shared.util.Country
-import com.nutrisport.shared.component.dialog.CountryPickerDialog
+import com.nutrisport.shared.ui.Country
+import com.nutrisport.shared.ui.component.dialog.CountryPickerDialog
 
 @Composable
 fun ProfileForm(

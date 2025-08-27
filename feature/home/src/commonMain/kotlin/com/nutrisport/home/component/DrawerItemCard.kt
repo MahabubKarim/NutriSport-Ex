@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.nutrisport.home.navigation.DrawerItem
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.IconPrimary
-import com.nutrisport.shared.TextPrimary
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.IconPrimary
+import com.nutrisport.shared.ui.theme.TextPrimary
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

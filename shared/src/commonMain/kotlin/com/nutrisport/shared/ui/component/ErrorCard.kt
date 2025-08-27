@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component
+package com.nutrisport.shared.ui.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
-import com.nutrisport.shared.FontSize
+import com.nutrisport.shared.ui.theme.FontSize
 
 @Composable
 fun ErrorCard(

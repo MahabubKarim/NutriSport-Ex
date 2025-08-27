@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.home.navigation.DrawerItem
-import com.nutrisport.shared.BebasNeueFont
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.TextPrimary
-import com.nutrisport.shared.TextSecondary
+import com.nutrisport.shared.ui.theme.BebasNeueFont
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.TextPrimary
+import com.nutrisport.shared.ui.theme.TextSecondary
 
 @Composable
 fun CustomDrawer(

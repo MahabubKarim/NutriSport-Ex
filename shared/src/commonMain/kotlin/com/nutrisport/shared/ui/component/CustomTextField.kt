@@ -1,4 +1,4 @@
-package com.nutrisport.shared.component
+package com.nutrisport.shared.ui.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.border
@@ -16,14 +16,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.nutrisport.shared.Alpha
-import com.nutrisport.shared.BorderError
-import com.nutrisport.shared.BorderIdle
-import com.nutrisport.shared.FontSize
-import com.nutrisport.shared.IconSecondary
-import com.nutrisport.shared.SurfaceDarker
-import com.nutrisport.shared.SurfaceLighter
-import com.nutrisport.shared.TextPrimary
+import com.nutrisport.shared.ui.theme.Alpha
+import com.nutrisport.shared.ui.theme.BorderError
+import com.nutrisport.shared.ui.theme.BorderIdle
+import com.nutrisport.shared.ui.theme.FontSize
+import com.nutrisport.shared.ui.theme.IconSecondary
+import com.nutrisport.shared.ui.theme.SurfaceDarker
+import com.nutrisport.shared.ui.theme.SurfaceLighter
+import com.nutrisport.shared.ui.theme.TextPrimary
 
 @Composable
 fun CustomTextField(

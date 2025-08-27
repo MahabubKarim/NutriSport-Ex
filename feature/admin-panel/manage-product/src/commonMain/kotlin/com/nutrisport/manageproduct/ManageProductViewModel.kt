@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.repository.AdminRepository
 import com.nutrisport.domain.model.Product
-import com.nutrisport.shared.util.ProductCategory
+import com.nutrisport.shared.ui.ProductCategoryUi
 import dev.gitlive.firebase.storage.File
 import kotlinx.coroutines.launch
 import kotlin.time.Clock
@@ -24,7 +24,7 @@ data class ManageProductState(
     val title: String = "",
     val description: String = "",
     val thumbnail: String = "thumbnail image",
-    val category: ProductCategory = ProductCategory.Protein,
+    val category: ProductCategoryUi = ProductCategoryUi.Protein,
     val flavors: String = "",
     val weight: Int? = null,
     val price: Double = 0.0,
@@ -64,7 +64,7 @@ class ManageProductViewModel(
                     updateDescription(product.description)
                     updateThumbnail(product.thumbnail)
                     updateThumbnailUploaderState(RequestState.Success(Unit))
-                    updateCategory(ProductCategory.valueOf(product.category))
+                    updateCategory(ProductCategoryUi.valueOf(product.category))
                     updateFlavors(product.flavors?.joinToString(",") ?: "")
                     updateWeight(product.weight)
                     updatePrice(product.price)
@@ -100,7 +100,7 @@ class ManageProductViewModel(
         thumbnailUploaderState = value
     }
 
-    fun updateCategory(value: ProductCategory) {
+    fun updateCategory(value: ProductCategoryUi) {
         screenState = screenState.copy(category = value)
     }
 
