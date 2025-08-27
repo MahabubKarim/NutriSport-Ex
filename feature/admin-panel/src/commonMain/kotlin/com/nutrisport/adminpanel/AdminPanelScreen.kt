@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mmk.nutrisport.util.RequestState.Idle.DisplayResult
 import com.nutrisport.shared.BebasNeueFont
 import com.nutrisport.shared.BorderIdle
 import com.nutrisport.shared.ButtonPrimary
@@ -37,7 +38,7 @@ import com.nutrisport.shared.SurfaceLighter
 import com.nutrisport.shared.TextPrimary
 import com.nutrisport.shared.component.InfoCard
 import com.nutrisport.shared.component.LoadingCard
-import com.nutrisport.shared.util.RequestState.Idle.DisplayResult
+import com.nutrisport.shared.component.ProductCard
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 

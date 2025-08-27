@@ -1,5 +1,6 @@
 package com.nutrisport.di
 
+import com.nutrisport.adminpanel.AdminPanelViewModel
 import com.nutrisport.auth.AuthViewModel
 import com.nutrisport.data.repository.CustomerRepositoryImpl
 import com.nutrisport.domain.repository.CustomerRepository

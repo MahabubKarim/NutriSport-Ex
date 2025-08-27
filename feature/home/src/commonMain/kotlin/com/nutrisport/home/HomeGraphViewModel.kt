@@ -2,8 +2,8 @@ package com.nutrisport.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.repository.CustomerRepository
-import com.nutrisport.shared.util.RequestState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted

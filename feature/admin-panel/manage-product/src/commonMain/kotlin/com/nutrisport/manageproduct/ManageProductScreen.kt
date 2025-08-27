@@ -49,6 +49,8 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.mmk.nutrisport.util.RequestState
+import com.mmk.nutrisport.util.RequestState.Idle.DisplayResult
 import com.nutrisport.shared.BebasNeueFont
 import com.nutrisport.shared.BorderIdle
 import com.nutrisport.shared.ButtonPrimary
@@ -72,8 +74,6 @@ import com.nutrisport.shared.component.PrimaryButton
 import com.nutrisport.shared.component.dialog.CategoriesDialog
 import com.nutrisport.shared.util.PhotoPicker
 import com.nutrisport.shared.util.ProductCategory
-import com.nutrisport.shared.util.RequestState
-import com.nutrisport.shared.util.RequestState.Idle.DisplayResult
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel

@@ -21,12 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Customer
 import com.nutrisport.home.navigation.BottomBarItem
 import com.nutrisport.shared.IconPrimary
 import com.nutrisport.shared.IconSecondary
 import com.nutrisport.shared.SurfaceLighter
-import com.nutrisport.shared.util.RequestState
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
