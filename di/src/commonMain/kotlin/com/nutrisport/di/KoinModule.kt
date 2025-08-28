@@ -2,7 +2,9 @@ package com.nutrisport.di
 
 import com.nutrisport.adminpanel.AdminPanelViewModel
 import com.nutrisport.auth.AuthViewModel
+import com.nutrisport.data.repository.AdminRepositoryImpl
 import com.nutrisport.data.repository.CustomerRepositoryImpl
+import com.nutrisport.domain.repository.AdminRepository
 import com.nutrisport.domain.repository.CustomerRepository
 import com.nutrisport.home.HomeGraphViewModel
 import com.nutrisport.manageproduct.ManageProductViewModel
@@ -14,6 +16,8 @@ import org.koin.dsl.module
 
 val sharedModule = module {
     single<CustomerRepository> { CustomerRepositoryImpl() }
+    single<AdminRepository> { AdminRepositoryImpl() }
+
     viewModelOf(::AuthViewModel)
     viewModelOf(::HomeGraphViewModel)
     viewModelOf(::ProfileViewModel)
@@ -26,6 +30,6 @@ fun initializeKoin(
 ) {
     startKoin {
         config?.invoke(this)
-        modules(sharedModule)
+        modules(sharedModule, platformModule)
     }
 }

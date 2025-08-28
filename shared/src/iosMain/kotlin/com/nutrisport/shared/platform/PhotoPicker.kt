@@ -32,6 +32,7 @@ actual class PhotoPicker {
     ) {
         val openPhotoPickerState by remember { openPhotoPicker }
 
+        // https://freedium.cfd/https://medium.com/@ramadan123sayed/understanding-launchedeffect-in-jetpack-compose-15356c577d85
         LaunchedEffect(openPhotoPickerState) {
             if (openPhotoPickerState) {
                 val viewController = getCurrentViewController()
