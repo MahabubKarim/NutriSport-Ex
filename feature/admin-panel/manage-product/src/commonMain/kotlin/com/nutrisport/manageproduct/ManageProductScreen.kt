@@ -20,9 +20,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,8 +51,19 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.mmk.kmpauth.google.GoogleAuthProvider
+import com.mmk.kmpauth.google.GoogleButtonUiContainer
 import com.mmk.nutrisport.util.RequestState
 import com.mmk.nutrisport.util.RequestState.Idle.DisplayResult
+import com.nutrisport.shared.platform.FileUtils
+import com.nutrisport.shared.platform.PhotoPicker
+import com.nutrisport.shared.ui.ProductCategoryUi
+import com.nutrisport.shared.ui.component.AlertTextField
+import com.nutrisport.shared.ui.component.CustomTextField
+import com.nutrisport.shared.ui.component.ErrorCard
+import com.nutrisport.shared.ui.component.LoadingCard
+import com.nutrisport.shared.ui.component.PrimaryButton
+import com.nutrisport.shared.ui.component.dialog.CategoriesDialog
 import com.nutrisport.shared.ui.theme.BebasNeueFont
 import com.nutrisport.shared.ui.theme.BorderIdle
 import com.nutrisport.shared.ui.theme.ButtonPrimary
@@ -66,14 +79,8 @@ import com.nutrisport.shared.ui.theme.SurfaceSecondary
 import com.nutrisport.shared.ui.theme.TextPrimary
 import com.nutrisport.shared.ui.theme.TextSecondary
 import com.nutrisport.shared.ui.theme.TextWhite
-import com.nutrisport.shared.ui.component.AlertTextField
-import com.nutrisport.shared.ui.component.CustomTextField
-import com.nutrisport.shared.ui.component.ErrorCard
-import com.nutrisport.shared.ui.component.LoadingCard
-import com.nutrisport.shared.ui.component.PrimaryButton
-import com.nutrisport.shared.ui.component.dialog.CategoriesDialog
-import com.nutrisport.shared.platform.PhotoPicker
-import com.nutrisport.shared.ui.ProductCategoryUi
+import com.nutrisport.shared.util.PreferenceUtils
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -94,13 +101,20 @@ fun ManageProductScreen(
     var dropdownMenuOpened by remember { mutableStateOf(false) }
 
     val photoPicker = koinInject<PhotoPicker>()
+    val fileUtils = FileUtils()
 
     photoPicker.InitializePhotoPicker(
-        onImageSelect = { file ->
-            viewModel.uploadThumbnailToStorage(
-                file = file,
-                onSuccess = { messageBarState.addSuccess("Thumbnail uploaded successfully!") }
-            )
+        onImageSelect = { photoUri ->
+            if (photoUri != null) {
+                // Call platform-specific helper to convert PhotoUri to bytes
+                val (imageBytes, fileName) = fileUtils.fileToByteArrayAndName(photoUri)
+
+                viewModel.uploadThumbnailToStorage(
+                    imageBytes = imageBytes,
+                    fileName = fileName,
+                    onSuccess = { messageBarState.addSuccess("Thumbnail uploaded successfully!") }
+                )
+            }
         }
     )
 
@@ -258,14 +272,13 @@ fun ManageProductScreen(
                                     contentAlignment = Alignment.TopEnd
                                 ) {
                                     AsyncImage(
-                                        modifier = Modifier.fillMaxSize(),
-                                        model = ImageRequest.Builder(
-                                            LocalPlatformContext.current
-                                        ).data(screenState.thumbnail)
-                                            .crossfade(enable = true)
+                                        model = ImageRequest.Builder(LocalPlatformContext.current)
+                                            .data(screenState.thumbnailBytes ?: screenState.thumbnail) // fallback to URL if bytes not loaded yet
+                                            .crossfade(true)
                                             .build(),
-                                        contentDescription = "Product thumbnail image",
-                                        contentScale = ContentScale.Crop
+                                        contentDescription = "Product thumbnail",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier.fillMaxSize()
                                     )
                                     Box(
                                         modifier = Modifier
@@ -448,6 +461,7 @@ fun ManageProductScreen(
                             )
                         }
                     }
+
                     Spacer(modifier = Modifier.height(24.dp))
                 }
                 PrimaryButton(

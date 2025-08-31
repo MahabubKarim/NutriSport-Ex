@@ -6,12 +6,26 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mmk.kmpauth.google.GoogleUser
 import com.mmk.nutrisport.util.RequestState
+import com.nutrisport.data.GoogleDriveUploader
 import com.nutrisport.domain.repository.AdminRepository
 import com.nutrisport.domain.model.Product
+import com.nutrisport.shared.platform.PhotoPicker
 import com.nutrisport.shared.ui.ProductCategoryUi
+import com.nutrisport.shared.util.PreferenceUtils
 import dev.gitlive.firebase.storage.File
+import io.ktor.client.call.body
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.utils.EmptyContent.contentType
+import io.ktor.http.ContentType
+import io.ktor.http.isSuccess
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.uuid.ExperimentalUuidApi
@@ -24,6 +38,7 @@ data class ManageProductState(
     val title: String = "",
     val description: String = "",
     val thumbnail: String = "thumbnail image",
+    val thumbnailBytes: ByteArray? = null,
     val category: ProductCategoryUi = ProductCategoryUi.Protein,
     val flavors: String = "",
     val weight: Int? = null,
@@ -31,13 +46,55 @@ data class ManageProductState(
     val isNew: Boolean = false,
     val isPopular: Boolean = false,
     val isDiscounted: Boolean = false
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ManageProductState
+
+        if (createdAt != other.createdAt) return false
+        if (weight != other.weight) return false
+        if (price != other.price) return false
+        if (isNew != other.isNew) return false
+        if (isPopular != other.isPopular) return false
+        if (isDiscounted != other.isDiscounted) return false
+        if (id != other.id) return false
+        if (title != other.title) return false
+        if (description != other.description) return false
+        if (thumbnail != other.thumbnail) return false
+        if (!thumbnailBytes.contentEquals(other.thumbnailBytes)) return false
+        if (category != other.category) return false
+        if (flavors != other.flavors) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = createdAt.hashCode()
+        result = 31 * result + (weight ?: 0)
+        result = 31 * result + price.hashCode()
+        result = 31 * result + isNew.hashCode()
+        result = 31 * result + isPopular.hashCode()
+        result = 31 * result + isDiscounted.hashCode()
+        result = 31 * result + id.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + thumbnail.hashCode()
+        result = 31 * result + (thumbnailBytes?.contentHashCode() ?: 0)
+        result = 31 * result + category.hashCode()
+        result = 31 * result + flavors.hashCode()
+        return result
+    }
+}
 
 class ManageProductViewModel(
     private val adminRepository: AdminRepository,
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     private val productId = savedStateHandle.get<String>("id") ?: ""
+
+    val preferenceUtils = inject<PreferenceUtils>()
 
     var screenState by mutableStateOf(ManageProductState())
         private set
@@ -94,6 +151,10 @@ class ManageProductViewModel(
 
     fun updateThumbnail(value: String) {
         screenState = screenState.copy(thumbnail = value)
+    }
+
+    fun updateThumbnailBytes(bytes: ByteArray?) {
+        screenState = screenState.copy(thumbnailBytes = bytes)
     }
 
     fun updateThumbnailUploaderState(value: RequestState<Unit>) {
@@ -153,11 +214,32 @@ class ManageProductViewModel(
         }
     }
 
+    fun fetchThumbnailFromDrive(fileId: String) {
+        viewModelScope.launch {
+            val token = preferenceUtils.value.getGoogleToken()
+            try {
+                updateThumbnailUploaderState(RequestState.Loading)
+                val bytes = GoogleDriveUploader().downloadImage(token, fileId)
+                updateThumbnailBytes(bytes)
+                updateThumbnailUploaderState(RequestState.Success(Unit))
+            } catch (e: Exception) {
+                updateThumbnailUploaderState(RequestState.Error("Failed to download thumbnail: $e"))
+            }
+        }
+    }
+
+    @OptIn(ExperimentalEncodingApi::class)
+    fun ByteArray.toBase64(): String = Base64.encode(this)
+
+    @OptIn(ExperimentalEncodingApi::class)
+    fun String.base64ToBytes(): ByteArray = Base64.decode(this)
+
     fun uploadThumbnailToStorage(
-        file: File?,
+        imageBytes: ByteArray?,
+        fileName: String,
         onSuccess: () -> Unit,
     ) {
-        if (file == null) {
+        if (imageBytes == null) {
             updateThumbnailUploaderState(RequestState.Error("File is null. Error while selecting an image."))
             return
         }
@@ -166,16 +248,24 @@ class ManageProductViewModel(
 
         viewModelScope.launch {
             try {
-                val downloadUrl = adminRepository.uploadImageToStorage(file)
+                val downloadUrl = adminRepository.uploadImageToDrive(
+                    token = preferenceUtils.value.getGoogleToken(),
+                    imageBytes = imageBytes,
+                    fileName = fileName
+                )
 
-                if (downloadUrl.isNullOrEmpty()) {
+                val fileId = downloadUrl
+                    ?: throw Exception("No file ID returned from Drive")
+                fetchThumbnailFromDrive(fileId)
+
+                if (downloadUrl.isEmpty()) {
                     throw Exception("Failed to retrieve a download URL after the upload.")
                 }
 
                 productId.takeIf { it.isNotEmpty() }?.let { id ->
                     adminRepository.updateProductThumbnail(
                         productId = id,
-                        downloadUrl = downloadUrl,
+                        driveFieldId = fileId,
                         onSuccess = {
                             onSuccess()
                             updateThumbnailUploaderState(RequestState.Success(Unit))
@@ -240,7 +330,7 @@ class ManageProductViewModel(
                         viewModelScope.launch {
                             adminRepository.updateProductThumbnail(
                                 productId = id,
-                                downloadUrl = "",
+                                driveFieldId = null,
                                 onSuccess = {
                                     updateThumbnail(value = "")
                                     updateThumbnailUploaderState(RequestState.Idle)
