@@ -1,6 +1,7 @@
 package com.nutrisport.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -9,12 +10,19 @@ import com.nutrisport.adminpanel.AdminPanelScreen
 import com.nutrisport.auth.AuthScreen
 import com.nutrisport.home.HomeGraphScreen
 import com.nutrisport.manageproduct.ManageProductScreen
+import com.nutrisport.manageproduct.ManageProductViewModel
 import com.nutrisport.profile.ProfileScreen
 import com.nutrisport.shared.navigation.Screen
+import com.nutrisport.shared.util.PreferenceUtils
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SetupNavGraph(startDestination: Screen = Screen.Auth) {
     val navController = rememberNavController()
+    val coroutineScope = rememberCoroutineScope()
+    val preferenceUtils = koinInject<PreferenceUtils>()
 
     NavHost(
         navController = navController,
@@ -66,16 +74,18 @@ fun SetupNavGraph(startDestination: Screen = Screen.Auth) {
             )
         }
         composable<Screen.ManageProduct> { backStackEntry ->
-            // The library serializes Screen.ManageProduct into a route string
-            // (e.g. /manageProduct?id=123) and pushes it onto the back stack.
-            // toRoute<T>() deserializes the arguments back into your Screen.ManageProduct data class.
-            // That’s where the id becomes available again.
+            // val viewModel: ManageProductViewModel = koinViewModel()
+
+            /** The library serializes Screen.ManageProduct into a route string
+            (e.g. /manageProduct?id=123) and pushes it onto the back stack.
+            toRoute<T>() deserializes the arguments back into your Screen.ManageProduct data class.
+            That’s where the id becomes available again.*/
             val id = backStackEntry.toRoute<Screen.ManageProduct>().id
             ManageProductScreen(
                 id = id,
                 navigateBack = {
                     navController.navigateUp()
-                }
+                },
             )
         }
     }
