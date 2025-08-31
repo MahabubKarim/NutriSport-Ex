@@ -1,5 +1,6 @@
 package com.mmk.nutrisport
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -90,6 +91,7 @@ class MainActivity : ComponentActivity() {
             }.start()
         }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         enableEdgeToEdge(
@@ -119,7 +121,7 @@ class MainActivity : ComponentActivity() {
 
         // Check if there is a previously signed-in account
         val lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(this)
-        //if (lastSignedInAccount != null) {
+        if (lastSignedInAccount != null) {
             // Use existing account to fetch token
             lifecycleScope.launch {
                 try {
@@ -131,10 +133,10 @@ class MainActivity : ComponentActivity() {
                     launchGoogleSignIn(this@MainActivity, signInLauncher)
                 }
             }
-        /*} else {
+        } else {
             // No account, start interactive sign-in
             launchGoogleSignIn(this, signInLauncher)
-        }*/
+        }
     }
 }
 

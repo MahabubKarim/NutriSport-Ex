@@ -94,7 +94,7 @@ class ManageProductViewModel(
 ) : ViewModel(), KoinComponent {
     private val productId = savedStateHandle.get<String>("id") ?: ""
 
-    val preferenceUtils = inject<PreferenceUtils>()
+    val preferenceUtils by inject<PreferenceUtils>()
 
     var screenState by mutableStateOf(ManageProductState())
         private set
@@ -216,7 +216,7 @@ class ManageProductViewModel(
 
     fun fetchThumbnailFromDrive(fileId: String) {
         viewModelScope.launch {
-            val token = preferenceUtils.value.getGoogleToken()
+            val token = preferenceUtils.getGoogleToken()
             try {
                 updateThumbnailUploaderState(RequestState.Loading)
                 val bytes = GoogleDriveUploader().downloadImage(token, fileId)
@@ -227,12 +227,6 @@ class ManageProductViewModel(
             }
         }
     }
-
-    @OptIn(ExperimentalEncodingApi::class)
-    fun ByteArray.toBase64(): String = Base64.encode(this)
-
-    @OptIn(ExperimentalEncodingApi::class)
-    fun String.base64ToBytes(): ByteArray = Base64.decode(this)
 
     fun uploadThumbnailToStorage(
         imageBytes: ByteArray?,
@@ -249,7 +243,7 @@ class ManageProductViewModel(
         viewModelScope.launch {
             try {
                 val downloadUrl = adminRepository.uploadImageToDrive(
-                    token = preferenceUtils.value.getGoogleToken(),
+                    token = preferenceUtils.getGoogleToken(),
                     imageBytes = imageBytes,
                     fileName = fileName
                 )
@@ -323,8 +317,9 @@ class ManageProductViewModel(
         onError: (String) -> Unit,
     ) {
         viewModelScope.launch {
-            adminRepository.deleteImageFromStorage(
-                downloadUrl = screenState.thumbnail,
+            adminRepository.deleteImageFromDrive(
+                token = preferenceUtils.getGoogleToken(),
+                fileId = screenState.thumbnail,
                 onSuccess = {
                     productId.takeIf { it.isNotEmpty() }?.let { id ->
                         viewModelScope.launch {

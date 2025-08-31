@@ -3,7 +3,6 @@ package com.nutrisport.data.repository
 import com.mmk.kmpauth.google.GoogleUser
 import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.data.DriveFileResponse
-import com.nutrisport.data.DriveFileResult
 import com.nutrisport.data.GoogleDriveUploader
 import com.nutrisport.domain.model.Product
 import com.nutrisport.domain.repository.AdminRepository
@@ -71,14 +70,12 @@ class AdminRepositoryImpl(
     }
 
     override suspend fun deleteImageFromDrive(
-        googleUser: GoogleUser,
+        token: String?,
         fileId: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         try {
-            val token = googleUser.accessToken
-            // If caller passed full URL, try to extract fileId
             val fileId = extractDriveFileId(fileId) ?: fileId
             val success = driveUploader.deleteFile(token, fileId)
             if (success) onSuccess() else onError("Failed to delete file from Drive.")
@@ -97,40 +94,6 @@ class AdminRepositoryImpl(
         val idParam = Regex("[?&]id=([a-zA-Z0-9_-]+)").find(urlOrId)
         if (idParam != null && idParam.groupValues.size > 1) return idParam.groupValues[1]
         return null
-    }
-
-    @OptIn(ExperimentalUuidApi::class)
-    override suspend fun uploadImageToStorage(file: File): String? {
-        return if (getCurrentUserId() != null) {
-            val storage = Firebase.storage.reference
-            val imagePath = storage.child(path = "images/${Uuid.random().toHexString()}")
-            try {
-                withTimeout(timeMillis = 20000L) {
-                    imagePath.putFile(file)
-                    imagePath.getDownloadUrl()
-                }
-            } catch (e: Exception) {
-                null
-            }
-        } else null
-    }
-
-    override suspend fun deleteImageFromStorage(
-        downloadUrl: String,
-        onSuccess: () -> Unit,
-        onError: (String) -> Unit,
-    ) {
-        try {
-            val storagePath = extractFirebaseStoragePath(downloadUrl)
-            if (storagePath != null) {
-                Firebase.storage.reference(storagePath).delete()
-                onSuccess()
-            } else {
-                onError("Storage Path is null.")
-            }
-        } catch (e: Exception) {
-            onError("Error while deleting a thumbnail: $e")
-        }
     }
 
     override fun readLastTenProducts(): Flow<RequestState<List<Product>>> = channelFlow {

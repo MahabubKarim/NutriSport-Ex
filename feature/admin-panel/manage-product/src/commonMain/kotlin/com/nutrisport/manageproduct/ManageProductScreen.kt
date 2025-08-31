@@ -335,11 +335,13 @@ fun ManageProductScreen(
                             }
                         )
                     }
+
                     CustomTextField(
                         value = screenState.title,
                         onValueChange = viewModel::updateTitle,
                         placeholder = "Title"
                     )
+
                     CustomTextField(
                         modifier = Modifier.height(168.dp),
                         value = screenState.description,
@@ -347,11 +349,13 @@ fun ManageProductScreen(
                         placeholder = "Description",
                         expanded = true
                     )
+
                     AlertTextField(
                         modifier = Modifier.fillMaxWidth(),
                         text = screenState.category.title,
                         onClick = { showCategoriesDialog = true }
                     )
+
                     AnimatedVisibility(
                         visible = screenState.category != ProductCategoryUi.Accessories
                     ) {
@@ -372,6 +376,7 @@ fun ManageProductScreen(
                             )
                         }
                     }
+
                     CustomTextField(
                         value = "${screenState.price}",
                         onValueChange = { value ->
@@ -384,6 +389,7 @@ fun ManageProductScreen(
                             keyboardType = KeyboardType.Number
                         )
                     )
+
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(24.dp)

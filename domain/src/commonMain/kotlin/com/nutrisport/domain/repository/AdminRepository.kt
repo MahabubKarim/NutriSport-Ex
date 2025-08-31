@@ -16,13 +16,6 @@ interface AdminRepository {
         onError: (String) -> Unit,
     )
 
-    suspend fun uploadImageToStorage(file: File): String?
-    suspend fun deleteImageFromStorage(
-        downloadUrl: String,
-        onSuccess: () -> Unit,
-        onError: (String) -> Unit,
-    )
-
     fun readLastTenProducts(): Flow<RequestState<List<Product>>>
     suspend fun readProductById(id: String): RequestState<Product>
     suspend fun updateProductThumbnail(
@@ -57,7 +50,7 @@ interface AdminRepository {
     ): String?
 
     suspend fun deleteImageFromDrive(
-        googleUser: GoogleUser,
+        token: String?,
         fileId: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
