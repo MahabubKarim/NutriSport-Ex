@@ -42,6 +42,8 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
+            implementation(libs.auth.kmp)
+
             implementation(project(":shared"))
             implementation(project(":domain"))
             implementation(project(":data"))

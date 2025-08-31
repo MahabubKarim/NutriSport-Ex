@@ -36,6 +36,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.android.client)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
         }
 
         iosMain.dependencies {
@@ -55,6 +57,8 @@ kotlin {
             implementation(libs.messagebar.kmp)
 
             implementation(libs.firebase.storage)
+            implementation(libs.google.auth)
+            implementation(libs.auth.kmp)
 
             implementation(libs.coil3)
             implementation(libs.coil3.compose)

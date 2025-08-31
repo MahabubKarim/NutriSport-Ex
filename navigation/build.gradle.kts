@@ -29,6 +29,9 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.datastore.preferences)
+        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -41,6 +44,13 @@ kotlin {
 
             implementation(libs.compose.navigation)
             implementation(libs.kotlinx.serialization)
+
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            implementation(libs.google.auth)
+            implementation(libs.auth.kmp)
 
             implementation(project(":shared"))
             implementation(project(":feature:auth"))
@@ -62,6 +72,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

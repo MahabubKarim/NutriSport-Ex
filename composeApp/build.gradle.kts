@@ -35,8 +35,7 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.google.material)
             implementation(libs.splash.screen)
-            // To pass that android context to our koin module
-            // to initializing the Koin library on android
+
             implementation(libs.koin.android)
 
             implementation(libs.firebase.auth.ktx)
@@ -57,8 +56,12 @@ kotlin {
             implementation(libs.auth.firebase.kmp)
             implementation(libs.koin.compose)
 
+            implementation(libs.google.auth)
+
+            implementation(project(":core"))
             implementation(project(":shared"))
             implementation(project(":domain"))
+            implementation(project(":data"))
             implementation(project(":di"))
             implementation(project(":navigation"))
         }
@@ -83,11 +86,53 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+
+    signingConfigs {
+        getByName("debug")
+
+        // Only configure release signing if properties exist
+        create("release") {
+            val keystoreFile = project.findProperty("RELEASE_STORE_FILE") as String?
+            val keystorePassword = project.findProperty("RELEASE_STORE_PASSWORD") as String?
+            val keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as String?
+            val keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String?
+
+            if (keystoreFile != null &&
+                keystorePassword != null &&
+                keyAlias != null &&
+                keyPassword != null
+            ) {
+                storeFile = file(keystoreFile)
+                storePassword = keystorePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            } else {
+                // fallback: don't assign signing config, Gradle will complain only on release builds
+                println("⚠️ No release signing config found. Make sure to define it in gradle.properties for release builds.")
+            }
         }
     }
+
+    buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

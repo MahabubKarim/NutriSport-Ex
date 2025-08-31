@@ -40,11 +40,13 @@ kotlin {
 
             implementation(libs.messagebar.kmp)
 
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
             implementation(project(":core"))
             implementation(project(":shared"))
+            implementation(project(":data"))
             implementation(project(":domain"))
         }
         commonTest.dependencies {

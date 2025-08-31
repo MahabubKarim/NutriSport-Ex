@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -15,6 +16,8 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
+
+    jvm()
 
     listOf(
         iosX64(),
@@ -28,6 +31,23 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            // OkHttp engine for Ktor Client
+            implementation("io.ktor:ktor-client-okhttp:3.2.3")
+            // Logging plugin for Ktor Client
+            implementation("io.ktor:ktor-client-logging:3.2.3")
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.android.client)
+        }
+
+        iosMain.dependencies {
+            // OkHttp engine for Ktor Client
+            implementation("io.ktor:ktor-client-okhttp:3.2.3")
+            // Logging plugin for Ktor Client
+            implementation("io.ktor:ktor-client-logging:3.2.3")
+            implementation(libs.ktor.darwin.client)
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -37,15 +57,33 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.kotlinx.serialization)
 
             implementation(libs.firebase.firestore)
             implementation(libs.firebase.storage)
             implementation(libs.auth.firebase.kmp)
 
+            implementation(libs.auth.kmp)
+
+            implementation(libs.google.auth)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.kotlinx.serialization)
+            implementation(libs.kotlinx.coroutines.core)
+
             implementation(project(":core"))
             implementation(project(":shared"))
             implementation(project(":domain"))
         }
+
+        jvmMain.dependencies {
+            implementation(project(":backend"))
+        }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

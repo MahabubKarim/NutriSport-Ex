@@ -31,6 +31,10 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.core)
+
+            implementation(libs.google.auth) // GIS
+            implementation("androidx.activity:activity-ktx:1.9.0")
         }
 
         commonMain.dependencies {
@@ -45,14 +49,29 @@ kotlin {
 
             implementation(libs.kotlinx.serialization)
 
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.kotlinx.serialization)
+            implementation(libs.kotlinx.coroutines.core)
+
             implementation(libs.auth.firebase.kmp)
+            implementation(libs.auth.kmp)
             implementation(libs.firebase.storage)
+
+            implementation(libs.google.auth)
 
             implementation(libs.coil3)
             implementation(libs.coil3.compose)
             implementation(libs.coil3.compose.core)
             implementation(libs.coil3.network.ktor)
 
+            // DataStore library
+            implementation("androidx.datastore:datastore:1.1.7")
+            // The Preferences DataStore library
+            implementation("androidx.datastore:datastore-preferences:1.1.7")
+
+            implementation(project(":core"))
             implementation(project(":domain"))
         }
         commonTest.dependencies {

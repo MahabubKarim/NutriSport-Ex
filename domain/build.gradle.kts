@@ -41,6 +41,7 @@ kotlin {
 
             implementation(libs.firebase.firestore)
             implementation(libs.auth.firebase.kmp)
+            implementation(libs.auth.kmp)
 
             implementation(libs.firebase.storage)
 
