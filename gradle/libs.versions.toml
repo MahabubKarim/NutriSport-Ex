@@ -1,26 +1,32 @@
 [versions]
-agp = "8.12.1"
+agp = "8.12.2"
 android-compileSdk = "36"
-android-minSdk = "24"
+android-minSdk = "26"
 android-targetSdk = "36"
 androidx-activityCompose = "1.10.1"
 androidx-lifecycle = "2.8.4"
+datastorePreferences = "1.1.7"
 firebaseAuthKtx = "23.2.1"
 firebaseCommonKtx = "21.0.0"
+googleApiClientAndroid = "2.8.1"
+googleApiServicesDrive = "2.8.1"
+googleHttpClientGson = "2.8.1"
 junit = "4.13.2"
 androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
 androidx-testExt = "1.2.1"
 compose-multiplatform = "1.8.0"
 kotlin = "2.1.20"
+ktorKtorClientLogging = "3.2.3"
+logbackClassic = "1.5.18"
 navigation = "2.9.0-beta01"
 auth = "2.3.0-beta02"
 notifier = "1.5.1"
 firebase = "2.1.0"
-koin = "4.1.0-Beta11"
+koin = "4.1.0"
 serialization = "1.7.3"
 coil3 = "3.0.4"
-ktor = "3.0.3"
+ktor = "3.2.3"
 coroutines = "1.10.1"
 messagebar = "1.0.7"
 google = "4.4.2"
@@ -28,14 +34,20 @@ browser = "1.0.4"
 settings = "1.3.0"
 splash = "1.0.1"
 material = "1.12.0"
+google-auth = "21.4.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtimeCompose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebaseCommonKtx" }
+#google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClientAndroid" }
+#google-api-services-drive = { module = "com.google.apis:google-api-services-drive", version.ref = "googleApiServicesDrive" }
+#google-http-client-gson = { module = "com.google.http-client:google-http-client-gson", version.ref = "googleHttpClientGson" }
+
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -43,6 +55,8 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-testExt-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-testExt" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackClassic" }
 splash-screen = { module = "androidx.core:core-splashscreen" , version.ref ="splash" }
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation" }
 
@@ -53,6 +67,7 @@ kmp-notifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "not
 firebase-app = { module = "dev.gitlive:firebase-app", version.ref = "firebase" }
 firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebase" }
 firebase-storage = { module = "dev.gitlive:firebase-storage", version.ref = "firebase" }
+google-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "google-auth" }
 firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "firebase" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -72,7 +87,8 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-darwin-client = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-android-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 messagebar-kmp = { module = "com.stevdza-san:messagebarkmp", version.ref = "messagebar" }
