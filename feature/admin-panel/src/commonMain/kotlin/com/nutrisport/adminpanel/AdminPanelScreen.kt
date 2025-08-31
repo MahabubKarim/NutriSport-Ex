@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +53,7 @@ fun AdminPanelScreen(
     val products = viewModel.filteredProducts.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     var searchBarVisible by mutableStateOf(false)
+    val thumbnailBytesMap by viewModel.thumbnailBytesMap.collectAsState()
 
     Scaffold(
         topBar = {
@@ -179,7 +181,11 @@ fun AdminPanelScreen(
                             ) { product ->
                                 ProductCard(
                                     product = product,
-                                    onClick = { navigateToManageProduct(product.id) }
+                                    onClick = { navigateToManageProduct(product.id) },
+                                    thumbnailBytes = thumbnailBytesMap[product.id],
+                                    onRequestThumbnail = { fileId ->
+                                        viewModel.fetchThumbnail(product.id, fileId)
+                                    }
                                 )
                             }
                         }
