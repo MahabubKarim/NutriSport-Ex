@@ -44,17 +44,15 @@ data class DriveFileResult(val id: String, val webContentLink: String?)
 @Serializable
 data class DriveFileMetadata(
     val name: String,
-    val mimeType: String,
     val parents: List<String>? = null
 )
+
 
 /**
  * Responsible only for uploading files to Google Drive.
  * No UI dependencies, ready for KMP shared code.
  */
-class GoogleDriveUploader(
-    //private val httpClient: HttpClient = defaultHttpClient()
-) {
+class GoogleDriveUploader() {
 
     private val httpClient = defaultHttpClient()
 
@@ -71,18 +69,6 @@ class GoogleDriveUploader(
                     level = LogLevel.BODY
                 }
             }
-    }
-
-    suspend fun getFolderId(token: String?, folderName: String): String? {
-        val response: Map<String, List<Map<String, String>>> = httpClient.get(
-            "https://www.googleapis.com/drive/v3/files"
-        ) {
-            header(HttpHeaders.Authorization, "Bearer $token")
-            parameter("q", "mimeType='application/vnd.google-apps.folder' and name='$folderName' and trashed=false")
-            parameter("fields", "files(id,name)")
-        }.body()
-
-        return response["files"]?.firstOrNull()?.get("id")
     }
 
     suspend fun downloadImage(
@@ -127,8 +113,8 @@ class GoogleDriveUploader(
     ): DriveFileResponse {
         val json = Json { ignoreUnknownKeys = true }
         val boundary = "-------drive-multipart-${Random.nextLong().toString(16)}"
-        val meta = DriveFileMetadata2(name = fileName, parents = parentFolderId?.let { listOf(it) })
-        val metadataJson = json.encodeToString(DriveFileMetadata2.serializer(), meta)
+        val meta = DriveFileMetadata(name = fileName, parents = parentFolderId?.let { listOf(it) })
+        val metadataJson = json.encodeToString(DriveFileMetadata.serializer(), meta)
 
         val metadataPartHeader =
             "--$boundary\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n"
@@ -191,74 +177,6 @@ class GoogleDriveUploader(
             throw DriveApiError.NetworkError(e.message ?: "Network error")
         }
     }
-
-    /**
-     * Uploads an image to Google Drive using multipart (metadata + binary).
-     *
-     * @param accessToken The OAuth 2.0 access token from Android GIS/AppAuth.
-     * @param fileName Desired name in Drive
-     * @param mimeType File MIME type, e.g. "image/jpeg"
-     * @param bytes File contents as ByteArray
-     * @param parentFolderId Optional parent folder
-     */
-    suspend fun uploadImage(
-        accessToken: String?,
-        fileName: String,
-        mimeType: String,
-        bytes: ByteArray,
-    ): DriveFileResult {
-        val parents = getFolderId(accessToken, "PublicImages")
-        val metadata = buildJsonMetadata(fileName, mimeType, folderId = parents)
-
-        val response: HttpResponse = httpClient.submitFormWithBinaryData(
-            url = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-            formData = formData {
-                append(
-                    key = "metadata",
-                    value = metadata,
-                    headers = Headers.build {
-                        append(HttpHeaders.ContentType, "application/json; charset=UTF-8")
-                        append(HttpHeaders.ContentDisposition, "form-data; name=\"metadata\"")
-                    }
-                )
-                append(
-                    key = "file",
-                    value = bytes,
-                    headers = Headers.build {
-                        append(HttpHeaders.ContentType, mimeType)
-                        append(HttpHeaders.ContentDisposition, "form-data; name=\"file\"; filename=\"$fileName\"")
-                    }
-                )
-            }
-        ) {
-            method = HttpMethod.Post
-            headers {
-                append(HttpHeaders.Authorization, "Bearer $accessToken")
-            }
-        }
-
-        if (!response.status.isSuccess()) {
-            throw Exception("Upload failed: ${response.status.value} ${response.bodyAsText()}")
-        }
-
-        val apiResponse: DriveFileResponse = response.body()
-        val fileId = apiResponse.id ?: throw Exception("No file ID returned from Drive")
-
-        return DriveFileResult(
-            id = fileId,
-            webContentLink = apiResponse.webViewLink
-        )
-    }
-
-    fun buildJsonMetadata(fileName: String, mimeType: String, folderId: String?): String {
-        val metadata = DriveFileMetadata(
-            name = fileName,
-            mimeType = mimeType,
-            parents = folderId?.let { listOf(it) } // Wrap folderId in a list
-        )
-        return Json.encodeToString(metadata)
-    }
-
 
     /**
      * Delete file by Drive fileId.
