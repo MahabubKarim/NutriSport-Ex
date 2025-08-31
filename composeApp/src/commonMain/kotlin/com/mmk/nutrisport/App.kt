@@ -22,6 +22,7 @@ import org.koin.compose.koinInject
 @Composable
 @Preview
 fun App() {
+    val googleAuthProvider: GoogleAuthProvider = koinInject()
     val customerRepository = koinInject<CustomerRepository>()
     var appReady by remember { mutableStateOf(false) }
     val isUserAuthenticated = remember { customerRepository.getCurrentUserId() != null }
@@ -32,9 +33,7 @@ fun App() {
 
     MaterialTheme {
         LaunchedEffect(Unit) {
-            GoogleAuthProvider.create(
-                credentials = GoogleAuthCredentials(serverId = Constants.WEB_CLIENT_ID)
-            )
+            googleAuthProvider
             appReady = true
         }
 
