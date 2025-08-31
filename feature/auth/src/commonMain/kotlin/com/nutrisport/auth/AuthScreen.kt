@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
+import com.mmk.kmpauth.google.GoogleButtonUiContainer
 import com.nutrisport.auth.component.GoogleButton
 import com.nutrisport.shared.ui.theme.Alpha
 import com.nutrisport.shared.ui.theme.BebasNeueFont
