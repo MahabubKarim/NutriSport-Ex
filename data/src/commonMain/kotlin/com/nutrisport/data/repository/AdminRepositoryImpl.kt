@@ -1,6 +1,10 @@
 package com.nutrisport.data.repository
 
+import com.mmk.kmpauth.google.GoogleUser
 import com.mmk.nutrisport.util.RequestState
+import com.nutrisport.data.DriveFileResponse
+import com.nutrisport.data.DriveFileResult
+import com.nutrisport.data.GoogleDriveUploader
 import com.nutrisport.domain.model.Product
 import com.nutrisport.domain.repository.AdminRepository
 import dev.gitlive.firebase.Firebase
@@ -16,7 +20,10 @@ import kotlinx.coroutines.withTimeout
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-class AdminRepositoryImpl : AdminRepository {
+class AdminRepositoryImpl(
+    private val driveUploader: GoogleDriveUploader
+) : AdminRepository {
+
     override fun getCurrentUserId() = Firebase.auth.currentUser?.uid
 
     override suspend fun createNewProduct(
@@ -38,6 +45,58 @@ class AdminRepositoryImpl : AdminRepository {
         } catch (e: Exception) {
             onError("Error while creating a new product: ${e.message}")
         }
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    override suspend fun uploadImageToDrive(
+        token: String?,
+        imageBytes: ByteArray,
+        fileName: String,
+        folderId: String?
+    ): String? {
+        return try {
+            val result: DriveFileResponse = driveUploader.uploadImage(
+                accessToken = token,
+                bytes = imageBytes,
+                fileName = fileName,
+                mimeType = "image/jpeg",
+                parentFolderId = folderId
+            )
+            // Return webContentLink (or fileId) — choose what you store in Firestore.
+            result.id
+        } catch (e: Exception) {
+            e.message
+            null
+        }
+    }
+
+    override suspend fun deleteImageFromDrive(
+        googleUser: GoogleUser,
+        fileId: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        try {
+            val token = googleUser.accessToken
+            // If caller passed full URL, try to extract fileId
+            val fileId = extractDriveFileId(fileId) ?: fileId
+            val success = driveUploader.deleteFile(token, fileId)
+            if (success) onSuccess() else onError("Failed to delete file from Drive.")
+        } catch (e: Exception) {
+            onError("Error while deleting from Drive: ${e.message}")
+        }
+    }
+
+    private fun extractDriveFileId(urlOrId: String): String? {
+        // Try to extract id from common Drive url forms:
+        // https://drive.google.com/file/d/FILEID/view
+        val regex = Regex("/d/([a-zA-Z0-9_-]+)")
+        val m = regex.find(urlOrId)
+        if (m != null && m.groupValues.size > 1) return m.groupValues[1]
+        // query param ?id=FILEID
+        val idParam = Regex("[?&]id=([a-zA-Z0-9_-]+)").find(urlOrId)
+        if (idParam != null && idParam.groupValues.size > 1) return idParam.groupValues[1]
+        return null
     }
 
     @OptIn(ExperimentalUuidApi::class)
@@ -167,7 +226,7 @@ class AdminRepositoryImpl : AdminRepository {
 
     override suspend fun updateProductThumbnail(
         productId: String,
-        downloadUrl: String,
+        driveFieldId: String?,
         onSuccess: () -> Unit,
         onError: (String) -> Unit,
     ) {
@@ -181,7 +240,7 @@ class AdminRepositoryImpl : AdminRepository {
                     .get()
                 if (existingProduct.exists) {
                     productCollection.document(productId)
-                        .update("thumbnail" to downloadUrl)
+                        .update("thumbnail" to driveFieldId)
                     onSuccess()
                 } else {
                     onError("Selected Product not found.")

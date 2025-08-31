@@ -1,9 +1,12 @@
 package com.nutrisport.domain.repository
 
+import com.mmk.kmpauth.google.GoogleUser
 import com.mmk.nutrisport.util.RequestState
 import com.nutrisport.domain.model.Product
 import dev.gitlive.firebase.storage.File
 import kotlinx.coroutines.flow.Flow
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 interface AdminRepository {
     fun getCurrentUserId(): String?
@@ -24,7 +27,7 @@ interface AdminRepository {
     suspend fun readProductById(id: String): RequestState<Product>
     suspend fun updateProductThumbnail(
         productId: String,
-        downloadUrl: String,
+        driveFieldId: String?,
         onSuccess: () -> Unit,
         onError: (String) -> Unit,
     )
@@ -44,4 +47,19 @@ interface AdminRepository {
     fun searchProductsByTitle(
         searchQuery: String,
     ): Flow<RequestState<List<Product>>>
+
+    @OptIn(ExperimentalUuidApi::class)
+    suspend fun uploadImageToDrive(
+        token: String?,
+        imageBytes: ByteArray,
+        fileName: String = "${Uuid.random().toHexString()}.jpg",
+        folderId: String? = null
+    ): String?
+
+    suspend fun deleteImageFromDrive(
+        googleUser: GoogleUser,
+        fileId: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    )
 }
