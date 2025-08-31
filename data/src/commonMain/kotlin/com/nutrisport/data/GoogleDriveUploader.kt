@@ -34,12 +34,9 @@ data class DriveFileResponse(
 sealed class DriveApiError(message: String, val code: Int? = null) : Exception(message) {
     class Unauthorized(msg: String = "Unauthorized (401)") : DriveApiError(msg, 401)
     class Forbidden(msg: String = "Forbidden (403)") : DriveApiError(msg, 403)
-    class ApiError(val statusCode: Int, msg: String) : DriveApiError(msg, statusCode)
+    class ApiError(statusCode: Int, msg: String) : DriveApiError(msg, statusCode)
     class NetworkError(msg: String) : DriveApiError(msg)
 }
-
-@Serializable
-data class DriveFileResult(val id: String, val webContentLink: String?)
 
 @Serializable
 data class DriveFileMetadata(

@@ -8,16 +8,12 @@ androidx-lifecycle = "2.8.4"
 datastorePreferences = "1.1.7"
 firebaseAuthKtx = "23.2.1"
 firebaseCommonKtx = "21.0.0"
-googleApiClientAndroid = "2.8.1"
-googleApiServicesDrive = "2.8.1"
-googleHttpClientGson = "2.8.1"
 junit = "4.13.2"
 androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
 androidx-testExt = "1.2.1"
 compose-multiplatform = "1.8.0"
 kotlin = "2.1.20"
-ktorKtorClientLogging = "3.2.3"
 logbackClassic = "1.5.18"
 navigation = "2.9.0-beta01"
 auth = "2.3.0-beta02"
@@ -44,9 +40,6 @@ androidx-lifecycle-runtimeCompose = { group = "org.jetbrains.androidx.lifecycle"
 
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebaseCommonKtx" }
-#google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClientAndroid" }
-#google-api-services-drive = { module = "com.google.apis:google-api-services-drive", version.ref = "googleApiServicesDrive" }
-#google-http-client-gson = { module = "com.google.http-client:google-http-client-gson", version.ref = "googleHttpClientGson" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
