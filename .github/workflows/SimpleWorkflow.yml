@@ -13,6 +13,7 @@ jobs:
           run: echo "this is the first step from the first job"
         - name: python
           id: shellStep
+          shell: python
           run: print("this step is using the python shell")
         
 
