@@ -15,5 +15,15 @@ jobs:
           id: shellStep
           shell: python
           run: print("this step is using the python shell")
-        
+  A_Simple_Job2:
+      name: my simple job name2
+      runs-on: ubuntu-latest
+      steps:
+        - name: name of my step
+          id: stepid
+          run: echo "this is the first step from the first job"
+        - name: python
+          id: shellStep
+          shell: python
+          run: print("this step is using the python shell")
 
