@@ -9,7 +9,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: name of my step
-          id: step id
+          id: stepid
           run: echo "this is the first step from the first job"
         - name: python
           id: shellStep
