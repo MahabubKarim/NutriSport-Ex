@@ -2,7 +2,9 @@ name: worflow overview
 
 on: 
   workflow_dispatch:
-
+  push:
+     branches:
+        - main
 jobs:
   my_self-hosted_job:
       name: my simple job name 3
