@@ -4,6 +4,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  my_self-hosted_job:
+      name: my simple job name 3
+      runs-on: self-hosted
+      steps: 
+         - name: step in a self-hosted runner
+           id: selfHosted
+           shell: cmd
+           run: |
+              echo this is a multiline comment
+              echo and this job has been executed from my sel-hosted runner
+         
   A_Simple_Job:
       name: my simple job name
       runs-on: ubuntu-latest
